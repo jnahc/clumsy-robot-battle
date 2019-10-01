@@ -76,11 +76,73 @@ console.log(opponent)
 
 
 // STEP 5
-// Create RNG functions for each zone - accepts weapon + zone
-// Sword - Up Down Left Right
-// Gun - Up Down Left Right
+// Create RNG functions for each zone - zone
+// Up (body, leftleg, rightleg, leftarm, right arm)
+// Down (body, leftleg, rightleg)
+// Left (body, leftarm) 
+// Right (body, rightarm)
 // RNG Function A - hit or miss
 // RNG Function B - accept selectedZone, return targetPart
+
+// game = {
+//   start: false,
+//   ended: false,
+//   baseEvade: 0,
+//   playerAttackPhase: false,
+//   opponentAttackPhase: false,
+//   currentTarget: undefined,
+//   currentPlayer: undefined,
+//   selectedWeapon: undefined,
+//   selectedZone: undefined,
+//   targetPart: undefined,
+//   randomNGHitConnect (){
+//     if ((Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus))>50){
+//       return true;
+//     }
+//   },
+//   attackMissed (){
+//     console.log(`Attack missed!`);
+//   },
+//   randomNGPart (){
+//     let randomNum = Math.random()*100;
+//     if(this.selectedZone === "up"){
+//       if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.body;
+//       } else if (randomNum < 74.5) {
+//         this.targetPart = this.currentTarget.leftHand;
+//       } else if (randomNum < 83) {
+//         this.targetPart = this.currentTarget.rightHand;
+//       } else if (randomNum < 91.5) {
+//         this.targetPart = this.currentTarget.leftLeg;
+//       } else {
+//         this.targetPart = this.currentTarget.rightLeg}
+//     }
+//     if(this.selectedZone === "down"){
+//       if (randomNum < 33) {
+//         this.targetPart = this.currentTarget.leftLeg;
+//       } else if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.rightLeg;
+//       } else {
+//         this.targetPart = this.currentTarget.body}
+//     }
+//     if(this.selectedZone === "right"){
+//       if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.rightHand;
+//       } else {
+//         this.targetPart = this.currentTarget.body}
+//     }
+//     if(this.selectedZone === "left"){
+//       if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.leftHand;
+//       } else {
+//         this.targetPart = this.currentTarget.body}
+//     }
+//   }
+// }
+
+// STEP 6
+// Apply Damage
+// set part to non functional when destroyed
 
 game = {
   start: false,
@@ -104,18 +166,46 @@ game = {
   randomNGPart (){
     let randomNum = Math.random()*100;
     if(this.selectedZone === "up"){
-      if (randomNum > 66) {
+      if (randomNum < 66) {
         this.targetPart = this.currentTarget.body;
-      } else if (randomNum > 74.5) {
+      } else if (randomNum < 74.5) {
         this.targetPart = this.currentTarget.leftHand;
-      } else if (randomNum > 83) {
+      } else if (randomNum < 83) {
         this.targetPart = this.currentTarget.rightHand;
-      } else if (randomNum > 91.5) {
+      } else if (randomNum < 91.5) {
         this.targetPart = this.currentTarget.leftLeg;
-      } else {this.targetPart = this.currentTarget.rightLeg}
+      } else {
+        this.targetPart = this.currentTarget.rightLeg}
     }
-
+    if(this.selectedZone === "down"){
+      if (randomNum < 33) {
+        this.targetPart = this.currentTarget.leftLeg;
+      } else if (randomNum < 66) {
+        this.targetPart = this.currentTarget.rightLeg;
+      } else {
+        this.targetPart = this.currentTarget.body}
+    }
+    if(this.selectedZone === "right"){
+      if (randomNum < 66) {
+        this.targetPart = this.currentTarget.rightHand;
+      } else {
+        this.targetPart = this.currentTarget.body}
+    }
+    if(this.selectedZone === "left"){
+      if (randomNum < 66) {
+        this.targetPart = this.currentTarget.leftHand;
+      } else {
+        this.targetPart = this.currentTarget.body}
+    }
+  },
+  applyDamage () {
+    let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
+    if (damagedPartHP <= 0) {
+      this.targetPart.functioning = false;
+    } else {
+      this.targetPart.currentHP = damagedPartHP;
+    }
   }
 }
-// STEP 6
-// Apply Damage
+
+
