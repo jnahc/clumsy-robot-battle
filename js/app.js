@@ -144,6 +144,73 @@ console.log(opponent)
 // Apply Damage
 // set part to non functional when destroyed
 
+// game = {
+//   start: false,
+//   ended: false,
+//   baseEvade: 0,
+//   playerAttackPhase: false,
+//   opponentAttackPhase: false,
+//   currentTarget: undefined,
+//   currentPlayer: undefined,
+//   selectedWeapon: undefined,
+//   selectedZone: undefined,
+//   targetPart: undefined,
+//   randomNGHitConnect (){
+//     if ((Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus))>50){
+//       return true;
+//     }
+//   },
+//   attackMissed (){
+//     console.log(`Attack missed!`);
+//   },
+//   randomNGPart (){
+//     let randomNum = Math.random()*100;
+//     if(this.selectedZone === "up"){
+//       if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.body;
+//       } else if (randomNum < 74.5) {
+//         this.targetPart = this.currentTarget.leftHand;
+//       } else if (randomNum < 83) {
+//         this.targetPart = this.currentTarget.rightHand;
+//       } else if (randomNum < 91.5) {
+//         this.targetPart = this.currentTarget.leftLeg;
+//       } else {
+//         this.targetPart = this.currentTarget.rightLeg}
+//     }
+//     if(this.selectedZone === "down"){
+//       if (randomNum < 33) {
+//         this.targetPart = this.currentTarget.leftLeg;
+//       } else if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.rightLeg;
+//       } else {
+//         this.targetPart = this.currentTarget.body}
+//     }
+//     if(this.selectedZone === "right"){
+//       if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.rightHand;
+//       } else {
+//         this.targetPart = this.currentTarget.body}
+//     }
+//     if(this.selectedZone === "left"){
+//       if (randomNum < 66) {
+//         this.targetPart = this.currentTarget.leftHand;
+//       } else {
+//         this.targetPart = this.currentTarget.body}
+//     }
+//   },
+//   applyDamage () {
+//     let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
+//     if (damagedPartHP <= 0) {
+//       this.targetPart.functioning = false;
+//     } else {
+//       this.targetPart.currentHP = damagedPartHP;
+//     }
+//   }
+// }
+
+// STEP 7
+// Create game start status
+
 game = {
   start: false,
   ended: false,
@@ -155,13 +222,37 @@ game = {
   selectedWeapon: undefined,
   selectedZone: undefined,
   targetPart: undefined,
+  gameStartSet() {
+    this.start = true;
+    this.playerTurn();
+  },
+  playerTurn(){
+    this.playerAttackPhase = true;
+    this.opponentAttackPhase = false;
+    this.currentTarget = opponent;
+  },
+  opponentTurn(){
+    this.playerAttackPhase = false;
+    this.opponentAttackPhase = true;
+    this.currentTarget = player;
+  },
+  turnSwitcher(){
+    if (this.playerAttackPhase === true){
+      this.opponentTurn();
+    }else{
+      this.playerTurn();
+    }
+  },
   randomNGHitConnect (){
     if ((Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus))>50){
       return true;
+    } else {
+      attackMissed ();
     }
   },
   attackMissed (){
     console.log(`Attack missed!`);
+    //switchTurn
   },
   randomNGPart (){
     let randomNum = Math.random()*100;
@@ -206,6 +297,6 @@ game = {
       this.targetPart.currentHP = damagedPartHP;
     }
   }
+  
 }
-
 
