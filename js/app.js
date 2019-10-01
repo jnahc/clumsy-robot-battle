@@ -33,13 +33,13 @@ class Part {
 // STEP 2 
 // Create game obj to hold variables
 
-game = {
-  start: false,
-  ended: false,
-  baseEvade: 0,
-  playerAttackPhase: false,
-  opponentAttackPhase: false
-}
+// game = {
+//   start: false,
+//   ended: false,
+//   baseEvade: 0,
+//   playerAttackPhase: false,
+//   opponentAttackPhase: false
+// }
 
 
 // STEP 3 
@@ -74,5 +74,24 @@ console.log(player)
 console.log(opponent)
 
 
-// Step 5
-// Create RNG function for each zone
+// STEP 5
+// Create RNG functions for each zone - accepts weapon + zone
+// Sword - Up Down Left Right
+// Gun - Up Down Left Right
+// RNG Function A - hit or miss
+// RNG Function B - accept selectedZone, return targetPart
+
+game = {
+  start: false,
+  ended: false,
+  baseEvade: 0,
+  playerAttackPhase: false,
+  opponentAttackPhase: false,
+  selectedWeapon: undefined,
+  selectedZone: undefined,
+  targetPart: undefined,
+
+}
+
+// STEP 6
+// Apply Damage
