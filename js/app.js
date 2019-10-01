@@ -14,6 +14,7 @@ class Robot {
     this.rightLeg = rightLeg; //obj
     this.sword = sword; //obj
     this.gun = gun; //gun
+    this.dodgeBonus = this.leftLeg.dodgeValue + this.rightLeg.dodgeValue
   }
 }
 
@@ -87,11 +88,34 @@ game = {
   baseEvade: 0,
   playerAttackPhase: false,
   opponentAttackPhase: false,
+  currentTarget: undefined,
+  currentPlayer: undefined,
   selectedWeapon: undefined,
   selectedZone: undefined,
   targetPart: undefined,
+  randomNGHitConnect (){
+    if ((Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus))>50){
+      return true;
+    }
+  },
+  attackMissed (){
+    console.log(`Attack missed!`);
+  },
+  randomNGPart (){
+    let randomNum = Math.random()*100;
+    if(this.selectedZone === "up"){
+      if (randomNum > 66) {
+        this.targetPart = this.currentTarget.body;
+      } else if (randomNum > 74.5) {
+        this.targetPart = this.currentTarget.leftHand;
+      } else if (randomNum > 83) {
+        this.targetPart = this.currentTarget.rightHand;
+      } else if (randomNum > 91.5) {
+        this.targetPart = this.currentTarget.leftLeg;
+      } else {this.targetPart = this.currentTarget.rightLeg}
+    }
 
+  }
 }
-
 // STEP 6
 // Apply Damage
