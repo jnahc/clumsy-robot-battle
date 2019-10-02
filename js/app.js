@@ -313,7 +313,7 @@ applyDamageAndDisplay() {
       console.log (`opponent auto selected sword`)
     } else {
       this.selectedWeapon = opponent.gun;
-      console.log (`oppionent auto selected gun`)
+      console.log (`opponent auto selected gun`) // NOTE GREVIOUS ERROR FIXED
     }
   },
   opponentAutoSelectArea (){

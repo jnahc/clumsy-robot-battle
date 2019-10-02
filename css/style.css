@@ -1,3 +1,140 @@
-body {
-  background: pink;
+* {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* .main-game {
+  display: flex;
+  flex-direction: row;
+} */
+
+
+
+/* HEADER SECTION */
+
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+
+}
+
+/* BODY */
+
+
+.main-game {
+  background: silver;
+  height: 90vh;
+  width: 100%;
+}
+
+#opponent-body {
+  /* height: 0;
+  width: 140px;
+  border-top: 300px solid orange;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-radius: 20px 20px 100px 100px; */
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+#opponent-left-arm {
+  /* height: 0;
+  width: 140px;
+  border-top: 300px solid orange;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-radius: 20px 20px 100px 100px; */
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+#opponent-right-arm {
+  /* height: 0;
+  width: 140px;
+  border-top: 300px solid orange;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-radius: 20px 20px 100px 100px; */
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+#opponent-left-leg {
+  /* height: 0;
+  width: 140px;
+  border-top: 300px solid orange;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-radius: 20px 20px 100px 100px; */
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+#opponent-right-leg {
+  /* height: 0;
+  width: 140px;
+  border-top: 300px solid orange;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-radius: 20px 20px 100px 100px; */
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+#opponent-gun {
+
+}
+
+#opponent-sword{
+  
+}
+
+/* FOOTER */
+
+footer {
+  background: gray;
+  width: 100%;
+  padding: 30px, 20px;
+  font-size: 18px;
 }
