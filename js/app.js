@@ -6,7 +6,8 @@
 // Create class for PARTS
 
 class Robot {
-  constructor(body, leftHand, rightHand, leftLeg, rightLeg, sword, gun){
+  constructor(name, body, leftHand, rightHand, leftLeg, rightLeg, sword, gun){
+    this.name = name; //str
     this.body = body; //obj
     this.leftHand = leftHand; //obj
     this.rightHand = rightHand; //obj
@@ -19,7 +20,8 @@ class Robot {
 }
 
 class Part {
-  constructor(currentHP, maxHP, functioning, damageValue, accuracy, dodgeValue){
+  constructor(name, currentHP, maxHP, functioning, damageValue, accuracy, dodgeValue){
+    this.name = name; // str
     this.currentHP = currentHP; //obj
     this.maxHP = maxHP; //obj
     this.functioning = functioning; //obj
@@ -47,29 +49,29 @@ class Part {
 // Create Robot Parts
 
 // Player Parts
-const playerBody = new Part (6,6,true,0,0,0,0);
-const playerLeftHand = new Part (3,3,true,0,0,0);
-const playerRightHand = new Part (3,3,true,0,0,0);
-const playerLeftLeg = new Part (3,3,true,0,5,0);
-const playerRightLeg = new Part (3,3,true,0,0,5,0);
-const playerSword = new Part (0,0,true,1,75,0);
-const playerGun = new Part (0,0,true,2,60,0);
+const playerBody = new Part ("playerBody",6,6,true,0,0,0,0);
+const playerLeftHand = new Part ("playerLeftHand", 3,3,true,0,0,0);
+const playerRightHand = new Part ("playerRighthand",3,3,true,0,0,0);
+const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,7.5);
+const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,0,7.5);
+const playerSword = new Part ("playerSword",0,0,true,1,75,0);
+const playerGun = new Part ("playerGun",0,0,true,2,60,0);
 
 // Opponent Parts
-const opponentBody = new Part (6,6,true,0,0,0,0);
-const opponentLeftHand = new Part (3,3,true,0,0,0);
-const opponentRightHand = new Part (3,3,true,0,0,0);
-const opponentLeftLeg = new Part (3,3,true,0,5,0);
-const opponentRightLeg = new Part (3,3,true,0,0,5,0);
-const opponentSword = new Part (0,0,true,1,75,0);
-const opponentGun = new Part (0,0,true,2,60,0);
+const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,0);
+const opponentLeftHand = new Part ("opponentLeftHand",3,3,true,0,0,0);
+const opponentRightHand = new Part ("opponentRightHand",3,3,true,0,0,0);
+const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,5,0);
+const opponentRightLeg = new Part ("opponentRightLeg",3,3,true,0,0,5,0);
+const opponentSword = new Part ("opponentSword",0,0,true,1,75,0);
+const opponentGun = new Part ("opponentGun",0,0,true,2,60,0);
 
 
 // STEP 4
 // Create Robots
 
-const player = new Robot (playerBody, playerLeftHand, playerRightHand, playerLeftLeg, playerRightLeg, playerSword, playerGun);
-const opponent = new Robot (opponentBody, opponentLeftHand, opponentRightHand, opponentLeftLeg, opponentRightLeg, opponentSword, opponentGun);
+const player = new Robot ("player", playerBody, playerLeftHand, playerRightHand, playerLeftLeg, playerRightLeg, playerSword, playerGun);
+const opponent = new Robot ("opponent", opponentBody, opponentLeftHand, opponentRightHand, opponentLeftLeg, opponentRightLeg, opponentSword, opponentGun);
 
 // STEP 5
 // Create RNG functions for each zone - zone
@@ -107,15 +109,16 @@ game = {
   selectedZone: undefined,
   targetPart: undefined,
   gameStartSet() {
+    console.log(`game start`);
     this.start = true;
     this.playerTurn();
-    console.log(`game start`);
   },
   startNewTurn() {
-    if (currentPlayer === "opponent"){
+    if (this.currentPlayer === opponent){
       this.opponentAutoSelectWeapon();
       this.opponentAutoSelectArea();
       this.randomNGHitConnect()
+    } else {
 
     }
 
@@ -125,7 +128,8 @@ game = {
     this.opponentAttackPhase = false;
     this.currentTarget = opponent;
     this.currentPlayer = player;
-    console.log(`player turn started`);
+    console.log(`player turn started `);
+    game.randomNGHitConnect() // NOTE testing only
   },
   opponentTurn(){
     this.playerAttackPhase = false;
@@ -133,19 +137,23 @@ game = {
     this.currentTarget = player;
     this.currentPlayer = opponent;
     console.log (`opponent turn started`);
+    this.startNewTurn();
   },
   turnSwitcher(){
-    if(player.body.functioning === false || opponent.body.functioning === false || player.leftHand.functioning === false && player.rightHand.functioning === false || opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){      
+    if(player.body.functioning === false || opponent.body.functioning === false || player.leftHand.functioning === false && player.rightHand.functioning === false || opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){  
+      console.log(`game over`)    
       this.gameOver(); 
     }else{
       if (this.playerAttackPhase === true){
+        console.log(`turn switch activated - enemy turn coming up`);
         this.opponentTurn();
-        console.log(`turn switch activated`);
-      }else{
+      }else if(this.playerAttackPhase === false){
+        console.log(`turn switch activated - player turn coming up`);
         this.playerTurn();
-        console.log(`turn switch activated`);
+      }else {
+        console.log(`something broke at turn switcher`)
       }
-    }
+  }
     
   },
   randomNGHitConnect (){
@@ -153,7 +161,7 @@ game = {
     if (rNGTotal>50){
       console.log(`rng hit success - ${rNGTotal}`);
       this.randomNGPart ()
-      return true;
+      // return true;
     } else {
       console.log(`rng hit missed - ${rNGTotal}`);
       this.attackMissed ();
@@ -161,7 +169,7 @@ game = {
   },
   attackMissed (){
     console.log(`Attack missed!`);
-    this.turnSwitcher
+    this.turnSwitcher();
   },
   randomNGPart (){
     let randomNum = Math.random()*100;
@@ -172,23 +180,23 @@ game = {
         attackMissed();
       } else */ if (randomNum < 66) {
         this.targetPart = this.currentTarget.body;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
         this.applyDamage();
       } else if (randomNum < 74.5) {
         this.targetPart = this.currentTarget.leftHand;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
         this.applyDamage();
       } else if (randomNum < 83) {
         this.targetPart = this.currentTarget.rightHand;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
         this.applyDamage();
       } else if (randomNum < 91.5) {
         this.targetPart = this.currentTarget.leftLeg;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
         this.applyDamage();
       } else {
         this.targetPart = this.currentTarget.rightLeg}
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
         this.applyDamage();
     }
     if(this.selectedZone === "down"){
@@ -225,18 +233,26 @@ game = {
   },
   applyDamage () {
     if (this.targetPart.functioning === false) {
-      console.log(`apply damage - part not functioning`);
-      attackMissed();
+      console.log(`apply damage - ${this.targetPart.name} not functioning`);
+      this.attackMissed();
+    } else if (this.selectedWeapon.functioning === false) {
+      this.attackMissed() 
     } else {
       console.log(`apply damage - attack success`);
       let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
       if (damagedPartHP <= 0) {
+        targetPart.currentHP = 0;
         this.targetPart.functioning = false;
-        console.log(`part has been broken`)
+        if (targetPart.name==="opponentLeftHand"||targetPart.name==="playerLeftHand"){
+          currentTarget.gun.functioning = false
+        }else if (targetPart.name==="opponentRightHand"||targetPart.name==="playerRightHand"){
+          currentTarget.gun.functioning = false
+        }
+        console.log(`${this.targetPart.name} has been broken`)
         this.turnSwitcher()
       } else {
         this.targetPart.currentHP = damagedPartHP;
-        console.log(`part has been damaged`)
+        console.log(`${this.targetPart.name} has been damaged`)
         this.turnSwitcher()
       }
     }
@@ -256,9 +272,9 @@ game = {
     let randomNum = Math.random()*100;
     if (randomNum < 25){
       this.selectedZone = "up";
-    } else if ( random < 50){
+    } else if ( randomNum < 50){
       this.selectedZone = "down";
-    } else if (random < 75){
+    } else if (randomNum < 75){
       this.selectedZone = "left";
     } else {
       this.selectedZone = "right"
@@ -266,23 +282,26 @@ game = {
   },
   gameOver () {
     console.log(`gameover status`);
+    console.log(`player body hp ${player.body.currentHP} player arms ${player.leftHand.currentHP} ${player.rightHand.currentHP}`)
+    console.log(`opponent body hp ${opponent.body.currentHP} opponent arms ${opponent.leftHand.currentHP} ${opponent.rightHand.currentHP}`)
     this.ended = true;
-    
+    return `game ended`
   }
 }
+
 
 // STEP 10
 // testing out one round 
 
 // game start
+game.selectedWeapon = player.sword;
+game.selectedZone = "up";
 game.gameStartSet();
 
 // weapon select
-// game.selectedWeapon = player.sword;
 // console.log(game.selectedWeapon);
 
 // area select
-// game.selectedZone = "up";
 // console.log(game.selectedZone);
 
 // player attacks robot
@@ -293,4 +312,5 @@ game.gameStartSet();
 // // console.log(player)
 // // console.log(opponent)
 
-game.applyDamage()
+// game.applyDamage()
+// FIX GAME OVER STATUS
