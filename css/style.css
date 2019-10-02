@@ -24,6 +24,7 @@ header {
 
 .title {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
 }
@@ -32,18 +33,38 @@ header {
 
 
 .main-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: silver;
   height: 90vh;
   width: 100%;
 }
 
+/* ENEMY ROBOT SECTION */
+
+.opponent {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  width: 66%;
+  height: 50vh;
+
+}
+
+#opponent-top {
+  display: flex;
+  flex-direction: row;
+}
+
+#opponent-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 #opponent-body {
-  /* height: 0;
-  width: 140px;
-  border-top: 300px solid orange;
-  border-left: 75px solid transparent;
-  border-right: 75px solid transparent;
-  border-radius: 20px 20px 100px 100px; */
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
@@ -55,12 +76,6 @@ header {
 }
 
 #opponent-left-arm {
-  /* height: 0;
-  width: 140px;
-  border-top: 300px solid orange;
-  border-left: 75px solid transparent;
-  border-right: 75px solid transparent;
-  border-radius: 20px 20px 100px 100px; */
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
@@ -72,12 +87,6 @@ header {
 }
 
 #opponent-right-arm {
-  /* height: 0;
-  width: 140px;
-  border-top: 300px solid orange;
-  border-left: 75px solid transparent;
-  border-right: 75px solid transparent;
-  border-radius: 20px 20px 100px 100px; */
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
@@ -89,12 +98,6 @@ header {
 }
 
 #opponent-left-leg {
-  /* height: 0;
-  width: 140px;
-  border-top: 300px solid orange;
-  border-left: 75px solid transparent;
-  border-right: 75px solid transparent;
-  border-radius: 20px 20px 100px 100px; */
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
@@ -106,12 +109,6 @@ header {
 }
 
 #opponent-right-leg {
-  /* height: 0;
-  width: 140px;
-  border-top: 300px solid orange;
-  border-left: 75px solid transparent;
-  border-right: 75px solid transparent;
-  border-radius: 20px 20px 100px 100px; */
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
@@ -123,18 +120,119 @@ header {
 }
 
 #opponent-gun {
-
+  font-size: 7em;
 }
 
 #opponent-sword{
-  
+  font-size: 7em;
 }
 
-/* FOOTER */
+/* SELECT WEAPON SECTION */
+.selection {
+  display: flex;
+  flex-direction: row;
+  width: 66%;
+  justify-content: space-between;
+  justify-self: flex-end;
 
-footer {
+}
+
+#select-sword {
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: limegreen;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+
+}
+
+#select-gun {
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: limegreen;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+
+}
+
+/* POST BATTLE SECTION  */
+.post-battle {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: space-between;
+  justify-self: flex-end;
+  margin-top: -25%;
+
+}
+#attack-summary {
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: steelblue;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+
+}
+
+#next {
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: steelblue;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+
+}
+
+
+
+/* FOOTER SECTION */
+
+.player {
+  display: flex;
+  flex-direction: column;
+}
+
+#items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: -10%;
+}
+
+#player-health-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: -10%;
+}
+
+.player-status {
+  width: 150px;
+  height: 100px;
+  shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: sienna;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+}
+
+/* footer {
   background: gray;
   width: 100%;
   padding: 30px, 20px;
   font-size: 18px;
-}
+} */

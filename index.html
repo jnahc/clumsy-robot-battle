@@ -26,43 +26,52 @@
     </div>
   </header>
   <container class="main-game">
-    <section class="selection">
-      <div id="select-sword"></div>
-      <div id="select-gun"></div>
-    </section>
+   
     <section class="attack-area">
       <div id="attack-left"></div>
       <div id="attack-right"></div>
       <div id="attack-body"></div>
       <div id="attack-leg"></div>
     </section>
-    <section class="post-battle">
-      <div id="attack-summary"></div>
-      <div id="next"></div>
-    </section>
+    
     <section class="opponent">
-      <div id="opponent-body">BODY</div>
-      <div id="opponent-left-arm">LEFT ARM</div>
-      <div id="opponent-right-arm">RIGHT ARM</div>
-      <div id="opponent-sword">SWORD &#x1f5e1; </div>
-      <div id="opponent-gun">GUN 	&#x1F52B ; </div>
-      <div id="opponent-left-leg">LEFT LEG</div>
-      <div id="opponent-right-leg">RIGHT LEG</div>
+      <section id="opponent-top">
+        <div id="opponent-gun">&#x1F52B </div>
+        <div id="opponent-right-arm">RIGHT ARM</div>
+        <div id="opponent-body">BODY</div>
+        <div id="opponent-left-arm">LEFT ARM</div>
+        <div id="opponent-sword">&#x1f5e1 </div>
+      </section>
+      <section id="opponent-bottom">
+        <div id="opponent-right-leg">RIGHT LEG</div>
+        <div id="opponent-left-leg">LEFT LEG</div>
+      </section>
     </section>
+    <section class="post-battle">
+        <div id="attack-summary">Battle Summary</div>
+        <div id="next">NEXT</div>
+      </section>
+    <section class="selection">
+        <div id="select-sword">SELECT SWORD</div>
+        <div id="select-gun">SELECT GUN</div>
+      </section>
     <section class="misc">
       <div id="damage-indicator"></div>
     </section>
     <footer>
-        <section class="player">
-            <div id="player-left-arm"></div>
-            <div id="player-left-leg"></div>
-            <div id="player-body"></div>
-            <div id="player-right-leg"></div>
-            <div id="player-right-arm"></div>
-            <div id="player-gun"></div>
-            <div id="player-sword"></div>
-          </section>
-
+      <section class="player">
+        <div id="items">
+          <div class="player-status" id="player-sword">P SWORD</div>
+          <div class="player-status" id="player-gun">P GUN</div>
+        </div>
+        <div id="player-health-status">
+          <div class="player-status" id="player-left-arm">P L ARM</div>
+          <div class="player-status" id="player-left-leg">P L LEG</div>
+          <div class="player-status" id="player-body">P BODY</div>
+          <div class="player-status" id="player-right-leg">P R LEG</div>
+          <div class="player-status" id="player-right-arm">P R ARM</div>
+        </div>
+        </section>
     </footer>
    
 
