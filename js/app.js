@@ -140,8 +140,17 @@ game = {
     this.startNewTurn();
   },
   turnSwitcher(){
-    if(player.body.functioning === false || opponent.body.functioning === false || player.leftHand.functioning === false && player.rightHand.functioning === false || opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){  
-      console.log(`game over`)    
+    if(player.body.functioning === false) {
+      console.log(`game over - player body destroyed`);
+      this.gameOver(); 
+    } else if (opponent.body.functioning === false){
+      console.log(`game over - opponent body destroyed`);
+      this.gameOver(); 
+    } else if (player.leftHand.functioning === false && player.rightHand.functioning === false) {
+      console.log(`game over - player disabled, no weapons`);
+      this.gameOver(); 
+    } else if (opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){  
+      console.log(`game over - opponent disabled, no weapons`);  
       this.gameOver(); 
     }else{
       if (this.playerAttackPhase === true){
@@ -241,12 +250,12 @@ game = {
       console.log(`apply damage - attack success`);
       let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
       if (damagedPartHP <= 0) {
-        targetPart.currentHP = 0;
+        this.targetPart.currentHP = 0;
         this.targetPart.functioning = false;
-        if (targetPart.name==="opponentLeftHand"||targetPart.name==="playerLeftHand"){
-          currentTarget.gun.functioning = false
-        }else if (targetPart.name==="opponentRightHand"||targetPart.name==="playerRightHand"){
-          currentTarget.gun.functioning = false
+        if (this.targetPart.name==="opponentLeftHand"||this.targetPart.name==="playerLeftHand"){
+          this.currentTarget.gun.functioning = false
+        }else if (this.targetPart.name==="opponentRightHand"||this.targetPart.name==="playerRightHand"){
+          this.currentTarget.gun.functioning = false
         }
         console.log(`${this.targetPart.name} has been broken`)
         this.turnSwitcher()
@@ -285,6 +294,14 @@ game = {
     console.log(`player body hp ${player.body.currentHP} player arms ${player.leftHand.currentHP} ${player.rightHand.currentHP}`)
     console.log(`opponent body hp ${opponent.body.currentHP} opponent arms ${opponent.leftHand.currentHP} ${opponent.rightHand.currentHP}`)
     this.ended = true;
+    this.playerAttackPhase = false;
+    this.opponentAttackPhase = false;
+    this.currentTarget = undefined;
+    this.currentPlayer = undefined;
+    this.selectedWeapon = undefined;
+    this.selectedZone = undefined;
+    this.targetPart = undefined;
+    console.log(`GAME SHOULD STOP HERE`)
     return `game ended`
   }
 }
@@ -313,4 +330,3 @@ game.gameStartSet();
 // // console.log(opponent)
 
 // game.applyDamage()
-// FIX GAME OVER STATUS
