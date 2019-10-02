@@ -152,7 +152,6 @@ game = {
     }else {
       return false;
     } 
-
   },
   turnSwitcher(){
     if (this.gameEndConditionsMet()===true){
@@ -168,8 +167,14 @@ game = {
         console.log(`something broke at turn switcher`)
       }
   }
-    
-  },
+},
+gameRandomNum () {
+  return Math.random()*100; 
+},  
+applyDamageAndDisplay() {
+  console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+},
   randomNGHitConnect (){
     let rNGTotal = Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus);
     if (rNGTotal>50){
@@ -186,70 +191,75 @@ game = {
     this.turnSwitcher();
   },
   attackUpArea() {
+    let randomNum = this.gameRandomNum();
     if (randomNum < 66) {
       this.targetPart = this.currentTarget.body;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else if (randomNum < 74.5) {
       this.targetPart = this.currentTarget.leftHand;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else if (randomNum < 83) {
       this.targetPart = this.currentTarget.rightHand;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else if (randomNum < 91.5) {
       this.targetPart = this.currentTarget.leftLeg;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else if (randomNum <= 100) {
       this.targetPart = this.currentTarget.rightLeg
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else {
       console.log (`error in randomNGPart - body`)
     }
   },
   attackDownArea () {
+    let randomNum = this.gameRandomNum();
     if (randomNum < 33) {
       this.targetPart = this.currentTarget.leftLeg;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else if (randomNum < 66) {
       this.targetPart = this.currentTarget.rightLeg;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else {
       this.targetPart = this.currentTarget.body;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     }
   },
   attackRightArea(){
+    let randomNum = this.gameRandomNum();
     if (randomNum < 66) {
       this.targetPart = this.currentTarget.rightHand;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
-    } else {
-      this.targetPart = this.currentTarget.body}
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
+    } else{
+      this.targetPart = this.currentTarget.body
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
+    }
   },
   attackLeftArea(){
+    let randomNum = this.gameRandomNum();
     if (randomNum < 66) {
       this.targetPart = this.currentTarget.leftHand;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
     } else {
       this.targetPart = this.currentTarget.body;
-      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();}
+      console.log(`rolled: ${randomNum}`);
+      this.applyDamageAndDisplay();
+    }
   },
   randomNGPart (){
     if (this.ended === true) {
       this.gameOver(); // forcing game to end
     } else {
-      let randomNum = Math.random()*100;
       console.log(`rng part process`)
       if(this.selectedZone === "up"){
         this.attackUpArea();
