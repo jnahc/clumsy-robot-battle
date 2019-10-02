@@ -335,8 +335,12 @@ applyDamageAndDisplay() {
   },
   gameOver () {
     console.log(`gameover status`);
-    console.log(`player body hp ${player.body.currentHP} player arms ${player.leftHand.currentHP} ${player.rightHand.currentHP}`)
-    console.log(`opponent body hp ${opponent.body.currentHP} opponent arms ${opponent.leftHand.currentHP} ${opponent.rightHand.currentHP}`)
+    console.log(`player body hp ${player.body.currentHP}
+     player arms ${player.leftHand.currentHP} ${player.rightHand.currentHP}
+     player legs ${player.leftLeg.currentHP} ${player.rightLeg.currentHP}`)
+    console.log(`opponent body hp ${opponent.body.currentHP} opponent arms ${opponent.leftHand.currentHP} ${opponent.rightHand.currentHP} 
+    opponent legs ${opponent.leftLeg.currentHP} ${opponent.rightLeg.currentHP}`)
+
     this.ended = true;
     this.playerAttackPhase = false;
     this.opponentAttackPhase = false;
