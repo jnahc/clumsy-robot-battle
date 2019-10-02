@@ -118,10 +118,7 @@ game = {
       this.opponentAutoSelectWeapon();
       this.opponentAutoSelectArea();
       this.randomNGHitConnect()
-    } else {
-
     }
-
   },
   playerTurn(){
     this.playerAttackPhase = true;
@@ -139,24 +136,32 @@ game = {
     console.log (`opponent turn started`);
     this.startNewTurn();
   },
-  turnSwitcher(){
+  gameEndConditionsMet() {
     if(player.body.functioning === false) {
       console.log(`game over - player body destroyed`);
-      this.gameOver(); 
+      return true; 
     } else if (opponent.body.functioning === false){
       console.log(`game over - opponent body destroyed`);
-      this.gameOver(); 
+      return true; 
     } else if (player.leftHand.functioning === false && player.rightHand.functioning === false) {
       console.log(`game over - player disabled, no weapons`);
-      this.gameOver(); 
+      return true; 
     } else if (opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){  
       console.log(`game over - opponent disabled, no weapons`);  
-      this.gameOver(); 
-    }else{
-      if (this.playerAttackPhase === true){
+      return true;
+    }else {
+      return false;
+    } 
+
+  },
+  turnSwitcher(){
+    if (this.gameEndConditionsMet()===true){
+      this.gameOver();
+    }else if (this.gameEndConditionsMet()===false){
+      if (this.playerAttackPhase === true && this.ended === false){
         console.log(`turn switch activated - enemy turn coming up`);
         this.opponentTurn();
-      }else if(this.playerAttackPhase === false){
+      }else if(this.playerAttackPhase === false && this.ended === false){
         console.log(`turn switch activated - player turn coming up`);
         this.playerTurn();
       }else {
@@ -180,68 +185,89 @@ game = {
     console.log(`Attack missed!`);
     this.turnSwitcher();
   },
+  attackUpArea() {
+    if (randomNum < 66) {
+      this.targetPart = this.currentTarget.body;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else if (randomNum < 74.5) {
+      this.targetPart = this.currentTarget.leftHand;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else if (randomNum < 83) {
+      this.targetPart = this.currentTarget.rightHand;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else if (randomNum < 91.5) {
+      this.targetPart = this.currentTarget.leftLeg;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else if (randomNum <= 100) {
+      this.targetPart = this.currentTarget.rightLeg
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else {
+      console.log (`error in randomNGPart - body`)
+    }
+  },
+  attackDownArea () {
+    if (randomNum < 33) {
+      this.targetPart = this.currentTarget.leftLeg;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else if (randomNum < 66) {
+      this.targetPart = this.currentTarget.rightLeg;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else {
+      this.targetPart = this.currentTarget.body;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    }
+  },
+  attackRightArea(){
+    if (randomNum < 66) {
+      this.targetPart = this.currentTarget.rightHand;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else {
+      this.targetPart = this.currentTarget.body}
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+  },
+  attackLeftArea(){
+    if (randomNum < 66) {
+      this.targetPart = this.currentTarget.leftHand;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();
+    } else {
+      this.targetPart = this.currentTarget.body;
+      console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+      this.applyDamage();}
+  },
   randomNGPart (){
-    let randomNum = Math.random()*100;
-    console.log(`rng part process`)
-    if(this.selectedZone === "up"){
-     /*  if (this.targetPart.functioning === false) {
-        console.log(`target part is missing - attack will count as a miss ${randomNum} ${this.target.part}`)
-        attackMissed();
-      } else */ if (randomNum < 66) {
-        this.targetPart = this.currentTarget.body;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-        this.applyDamage();
-      } else if (randomNum < 74.5) {
-        this.targetPart = this.currentTarget.leftHand;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-        this.applyDamage();
-      } else if (randomNum < 83) {
-        this.targetPart = this.currentTarget.rightHand;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-        this.applyDamage();
-      } else if (randomNum < 91.5) {
-        this.targetPart = this.currentTarget.leftLeg;
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-        this.applyDamage();
+    if (this.ended === true) {
+      this.gameOver(); // forcing game to end
+    } else {
+      let randomNum = Math.random()*100;
+      console.log(`rng part process`)
+      if(this.selectedZone === "up"){
+        this.attackUpArea();
+      } else if(this.selectedZone === "down"){
+        this.attackDownArea();
+      } else if(this.selectedZone === "right"){
+        this.attackRightArea();
+      } else if(this.selectedZone === "left"){
+        this.attackLeftArea();
       } else {
-        this.targetPart = this.currentTarget.rightLeg}
-        console.log(`rolled: ${randomNum} - target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-        this.applyDamage();
-    }
-    if(this.selectedZone === "down"){
-   /*    if (this.targetPart.functioning === false) {
-        attackMissed();
-      } else  */if (randomNum < 33) {
-        this.targetPart = this.currentTarget.leftLeg;
-        this.applyDamage();
-      } else if (randomNum < 66) {
-        this.targetPart = this.currentTarget.rightLeg;
-      } else {
-        this.targetPart = this.currentTarget.body}
-    }
-    if(this.selectedZone === "right"){
-     /*  if (this.targetPart.functioning === false) {
-        attackMissed();
-      } else  */if (randomNum < 66) {
-        this.targetPart = this.currentTarget.rightHand;
-        this.applyDamage();
-      } else {
-        this.targetPart = this.currentTarget.body}
-        this.applyDamage();
-    }
-    if(this.selectedZone === "left"){
-     /*  if (this.targetPart.functioning === false) {
-        attackMissed();
-      } else  */if (randomNum < 66) {
-        this.targetPart = this.currentTarget.leftHand;
-        this.applyDamage();
-      } else {
-        this.targetPart = this.currentTarget.body}
-        this.applyDamage();
+        console.log (`error in randomNGpart`)
+      }
     }
   },
   applyDamage () {
-    if (this.targetPart.functioning === false) {
+    if (this.ended === true) {
+      this.gameOver(); // forcing game to 
+    }else if (this.targetPart.functioning === false) {
       console.log(`apply damage - ${this.targetPart.name} not functioning`);
       this.attackMissed();
     } else if (this.selectedWeapon.functioning === false) {
@@ -252,12 +278,14 @@ game = {
       if (damagedPartHP <= 0) {
         this.targetPart.currentHP = 0;
         this.targetPart.functioning = false;
+        console.log(`${this.targetPart.name} has been broken`)
         if (this.targetPart.name==="opponentLeftHand"||this.targetPart.name==="playerLeftHand"){
-          this.currentTarget.gun.functioning = false
+          this.currentTarget.sword.functioning = false
+          console.log(`${this.currentTarget.name}'s sword is broken`);
         }else if (this.targetPart.name==="opponentRightHand"||this.targetPart.name==="playerRightHand"){
           this.currentTarget.gun.functioning = false
+          console.log(`${this.currentTarget.name}'s gun is broken`);
         }
-        console.log(`${this.targetPart.name} has been broken`)
         this.turnSwitcher()
       } else {
         this.targetPart.currentHP = damagedPartHP;
@@ -272,8 +300,10 @@ game = {
     let randomNum = Math.random()*100;
     if (randomNum >=50){
       this.selectedWeapon = opponent.sword;
+      console.log (`opponent auto selected sword`)
     } else {
       this.selectedWeapon = opponent.gun;
+      console.log (`oppionent auto selected gun`)
     }
   },
   opponentAutoSelectArea (){
@@ -281,12 +311,16 @@ game = {
     let randomNum = Math.random()*100;
     if (randomNum < 25){
       this.selectedZone = "up";
+      console.log(`opponent selected "up" area`);
     } else if ( randomNum < 50){
       this.selectedZone = "down";
+      console.log(`opponent selected "down" area`);
     } else if (randomNum < 75){
       this.selectedZone = "left";
+      console.log(`opponent selected "left" area`);
     } else {
-      this.selectedZone = "right"
+      this.selectedZone = "right";
+      console.log(`opponent selected "right" area`);
     } 
   },
   gameOver () {
