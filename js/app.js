@@ -355,8 +355,8 @@ applyDamageAndDisplay() {
 // testing out one round 
 
 // game start
-game.selectedWeapon = player.sword;
-game.selectedZone = "up";
+game.selectedWeapon = player.sword; // ANCHOR testing only
+game.selectedZone = "up"; // ANCHOR testing only
 game.gameStartSet();
 
 // weapon select
