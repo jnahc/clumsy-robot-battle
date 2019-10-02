@@ -1,4 +1,4 @@
-console.log(`yup`);
+// console.log(`yup`);
 
 
 // STEP 1 
@@ -71,10 +71,6 @@ const opponentGun = new Part (0,0,true,2,60,0);
 const player = new Robot (playerBody, playerLeftHand, playerRightHand, playerLeftLeg, playerRightLeg, playerSword, playerGun);
 const opponent = new Robot (opponentBody, opponentLeftHand, opponentRightHand, opponentLeftLeg, opponentRightLeg, opponentSword, opponentGun);
 
-console.log(player)
-console.log(opponent)
-
-
 // STEP 5
 // Create RNG functions for each zone - zone
 // Up (body, leftleg, rightleg, leftarm, right arm)
@@ -92,6 +88,13 @@ console.log(opponent)
 // STEP 7
 // Create game start status
 
+// STEP 8 
+// Adding in opponent auto select weapon & auto select target zone functions
+
+// STEP 9
+// Game ending conditions
+
+
 game = {
   start: false,
   ended: false,
@@ -106,87 +109,141 @@ game = {
   gameStartSet() {
     this.start = true;
     this.playerTurn();
+    console.log(`game start`);
+  },
+  startNewTurn() {
+    if (currentPlayer === "opponent"){
+      this.opponentAutoSelectWeapon();
+      this.opponentAutoSelectArea();
+      this.randomNGHitConnect()
+
+    }
+
   },
   playerTurn(){
     this.playerAttackPhase = true;
     this.opponentAttackPhase = false;
     this.currentTarget = opponent;
+    this.currentPlayer = player;
+    console.log(`player turn started`);
   },
   opponentTurn(){
     this.playerAttackPhase = false;
     this.opponentAttackPhase = true;
     this.currentTarget = player;
+    this.currentPlayer = opponent;
+    console.log (`opponent turn started`);
   },
   turnSwitcher(){
-    if (this.playerAttackPhase === true){
-      this.opponentTurn();
+    if(player.body.functioning === false || opponent.body.functioning === false || player.leftHand.functioning === false && player.rightHand.functioning === false || opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){      
+      this.gameOver(); 
     }else{
-      this.playerTurn();
+      if (this.playerAttackPhase === true){
+        this.opponentTurn();
+        console.log(`turn switch activated`);
+      }else{
+        this.playerTurn();
+        console.log(`turn switch activated`);
+      }
     }
+    
   },
   randomNGHitConnect (){
-    if ((Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus))>50){
+    let rNGTotal = Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus);
+    if (rNGTotal>50){
+      console.log(`rng hit success - ${rNGTotal}`);
+      this.randomNGPart ()
       return true;
     } else {
-      attackMissed ();
+      console.log(`rng hit missed - ${rNGTotal}`);
+      this.attackMissed ();
     }
   },
   attackMissed (){
     console.log(`Attack missed!`);
-    //switchTurn
+    this.turnSwitcher
   },
   randomNGPart (){
     let randomNum = Math.random()*100;
+    console.log(`rng part process`)
     if(this.selectedZone === "up"){
-      if (this.targetPart.functioning === false) {
+     /*  if (this.targetPart.functioning === false) {
+        console.log(`target part is missing - attack will count as a miss ${randomNum} ${this.target.part}`)
         attackMissed();
-      } else if (randomNum < 66) {
+      } else */ if (randomNum < 66) {
         this.targetPart = this.currentTarget.body;
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        this.applyDamage();
       } else if (randomNum < 74.5) {
         this.targetPart = this.currentTarget.leftHand;
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        this.applyDamage();
       } else if (randomNum < 83) {
         this.targetPart = this.currentTarget.rightHand;
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        this.applyDamage();
       } else if (randomNum < 91.5) {
         this.targetPart = this.currentTarget.leftLeg;
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        this.applyDamage();
       } else {
         this.targetPart = this.currentTarget.rightLeg}
+        console.log(`rolled: ${randomNum} - target part: ${this.targetPart} - current target: ${this.currentTarget}`);
+        this.applyDamage();
     }
     if(this.selectedZone === "down"){
-      if (this.targetPart.functioning === false) {
+   /*    if (this.targetPart.functioning === false) {
         attackMissed();
-      } else if (randomNum < 33) {
+      } else  */if (randomNum < 33) {
         this.targetPart = this.currentTarget.leftLeg;
+        this.applyDamage();
       } else if (randomNum < 66) {
         this.targetPart = this.currentTarget.rightLeg;
       } else {
         this.targetPart = this.currentTarget.body}
     }
     if(this.selectedZone === "right"){
-      if (this.targetPart.functioning === false) {
+     /*  if (this.targetPart.functioning === false) {
         attackMissed();
-      } else if (randomNum < 66) {
+      } else  */if (randomNum < 66) {
         this.targetPart = this.currentTarget.rightHand;
+        this.applyDamage();
       } else {
         this.targetPart = this.currentTarget.body}
+        this.applyDamage();
     }
     if(this.selectedZone === "left"){
-      if (this.targetPart.functioning === false) {
+     /*  if (this.targetPart.functioning === false) {
         attackMissed();
-      } else if (randomNum < 66) {
+      } else  */if (randomNum < 66) {
         this.targetPart = this.currentTarget.leftHand;
+        this.applyDamage();
       } else {
         this.targetPart = this.currentTarget.body}
+        this.applyDamage();
     }
   },
   applyDamage () {
-    let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
-    if (damagedPartHP <= 0) {
-      this.targetPart.functioning = false;
+    if (this.targetPart.functioning === false) {
+      console.log(`apply damage - part not functioning`);
+      attackMissed();
     } else {
-      this.targetPart.currentHP = damagedPartHP;
+      console.log(`apply damage - attack success`);
+      let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
+      if (damagedPartHP <= 0) {
+        this.targetPart.functioning = false;
+        console.log(`part has been broken`)
+        this.turnSwitcher()
+      } else {
+        this.targetPart.currentHP = damagedPartHP;
+        console.log(`part has been damaged`)
+        this.turnSwitcher()
+      }
     }
+    
   },
   opponentAutoSelectWeapon (){
+    console.log(`opponent auto select weapon`);
     let randomNum = Math.random()*100;
     if (randomNum >=50){
       this.selectedWeapon = opponent.sword;
@@ -195,6 +252,7 @@ game = {
     }
   },
   opponentAutoSelectArea (){
+    console.log(`opponent auto select area`);
     let randomNum = Math.random()*100;
     if (randomNum < 25){
       this.selectedZone = "up";
@@ -207,15 +265,32 @@ game = {
     } 
   },
   gameOver () {
-    if(player.body.functioning === false || opponent.body.functioning === false || player.leftHand.functioning === false && player.rightHand.functioning === false || opponent.rightHand.functioning === false && opponent.leftHand.functioning === false) {
-      this.ended = true;
-    }
+    console.log(`gameover status`);
+    this.ended = true;
+    
   }
 }
 
-// STEP 8 
-// Adding in opponent auto select weapon & auto select target zone functions
+// STEP 10
+// testing out one round 
 
-// STEP 9
-// Game ending conditions
+// game start
+game.gameStartSet();
 
+// weapon select
+// game.selectedWeapon = player.sword;
+// console.log(game.selectedWeapon);
+
+// area select
+// game.selectedZone = "up";
+// console.log(game.selectedZone);
+
+// player attacks robot
+// game.randomNGHitConnect();
+// console.log (game)
+// console.log(opponent);
+// console.log(player)
+// // console.log(player)
+// // console.log(opponent)
+
+game.applyDamage()
