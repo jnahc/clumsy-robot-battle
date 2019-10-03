@@ -135,11 +135,11 @@ game = {
     // game.randomNGHitConnect() // NOTE testing only
   },
   pressWeaponSelect() {
-    console.log (`${this.selectedWeapon} selected`);
+    console.log (`${this.selectedWeapon.name} selected`);
     console.log (`awaiting target area select`);
   },
   pressTargetSelect() {
-    console.log (`${this.currentTarget} selected`)
+    console.log (`${this.selectedZone} selected`)
     console.log(`activating randomNGHitConnect `)
     this.randomNGHitConnect();
 
@@ -168,6 +168,10 @@ game = {
     }else {
       return false;
     } 
+  },
+  endTurn() {
+    console.log(`${this.currentPlayer.name} turn ended`)
+    this.turnSwitcher();
   },
   turnSwitcher(){
     if (this.gameEndConditionsMet()===true){
@@ -204,7 +208,7 @@ game = {
   },
   attackMissed (){
     console.log(`Attack missed!`);
-    this.turnSwitcher();
+    this.awaitNextButton();
   },
   attackUpArea() {
     let randomNum = this.gameRandomNum();
@@ -312,17 +316,17 @@ game = {
           this.currentTarget.gun.functioning = false
           console.log(`${this.currentTarget.name}'s gun is broken`);
         }
-        this.awaitNextButton()
+        console.log(`awaiting next button to be pressed`);
       } else {
         this.targetPart.currentHP = damagedPartHP;
         console.log(`${this.targetPart.name} has been damaged`)
-        this.awaitNextButton()
+        console.log(`awaiting next button to be pressed`);
       }
     }
   },
   awaitNextButton () {
-    console.log(`awaiting next button to be perssed`);
-    this.turnSwitcher()
+    console.log(`${this.currentPlayer.name} actions completed - summary`)
+    console.log(`print out some data - click end turn`)
 
   },
   opponentAutoSelectWeapon (){
@@ -410,6 +414,7 @@ game = {
   // POST BATTLE
   $attackSummary = $(`#attack-summary`)
   $next = $(`#next`)
+  $endTurn = $(`#end-turn`)
   
   // GAME ICONS
   $damageIndicator = $(`#damage-indicator`)
@@ -450,32 +455,37 @@ game = {
   $attackLeft.on(`click`, function(event){
     console.log(`$attackLeft clicked`);
     game.selectedZone = "left" ;
-    pressTargetSelect() ;
+    game.pressTargetSelect() ;
   });
 
   $attackBody.on(`click`, function(event){
     console.log(`$attackBody clicked`);
     game.selectedZone = "up" ;
-    pressTargetSelect() ;
+    game.pressTargetSelect() ;
   });
 
   $attackRight.on(`click`, function(event){
     console.log(`$attackRight clicked`);
     game.selectedZone = "right" ;
-    pressTargetSelect() ;
+    game.pressTargetSelect() ;
   });
 
   $attackLegs.on(`click`, function(event){
     console.log(`$attackLegs clicked`);
     game.selectedZone = "down" ;
-    pressTargetSelect() ;
+    game.pressTargetSelect() ;
   });
 
   // POST BATTLE
   $next.on(`click`, function(event){
     console.log(`$next clicked`);
-    game.awaitNextButton()
+    game.awaitNextButton() ;
   });
+
+  $endTurn.on(`click`, function(event){
+    console.log(`$endTurn clicked`);
+    game.endTurn()
+  })
   
   
 
