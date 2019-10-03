@@ -108,6 +108,22 @@ game = {
   selectedWeapon: undefined,
   selectedZone: undefined,
   targetPart: undefined,
+  // $opponent: $(`.opponent`),
+  // $opponentGun: $(`#opponent-gun`),
+  // $opponentRightArm: $(`#opponent-right-arm`),
+  // $opponentBody: $(`#opponent-body`),
+  // $opponentLeftArm: $(`#opponent-left-arm`),
+  // $opponentSword: $(`#opponent-sword`),
+  // $attackSummary: $(`#attack-summary`),
+  // $next: $(`#next`),
+  // $selectSword: $(`#select-sword`),
+  // $selectGun: $(`#select-gun`),
+  // $damageIndicator: $(`#damage-indicator`),
+  // $playerSword: $(`#player-sword`),
+  // $playerGun: $(`#player-gun`)
+
+
+
   gameStartSet() {
     console.log(`game start`);
     this.start = true;
@@ -378,3 +394,13 @@ game.gameStartSet();
 // // console.log(opponent)
 
 // game.applyDamage()
+
+// STEP 11
+// HTML & CSS V1
+
+// STEP 12
+// jQuery Selectors
+
+// STEP 13
+// event listeners
+

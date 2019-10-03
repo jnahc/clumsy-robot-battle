@@ -35,8 +35,9 @@ header {
 
 body {
   max-width: 980px;
+  min-height: 700px;
+  margin: 0 auto;
 }
-
 
 
 .main-game {
@@ -209,6 +210,7 @@ body {
 }
 
 /* POST BATTLE SECTION  */
+
 .post-battle {
   display: flex;
   flex-direction: row;
@@ -240,6 +242,20 @@ body {
   margin: 20px;
   padding: 20px;
 
+}
+
+/* GAME ICONS SECTION */
+
+#damage-indicator {
+  display: none;
+  color: orangered;
+  font-size: 5em;
+}
+
+#health-point {
+  display: none;
+  color: green;
+  font-size: 3em;
 }
 
 
