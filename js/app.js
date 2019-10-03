@@ -131,7 +131,18 @@ game = {
     this.currentTarget = opponent;
     this.currentPlayer = player;
     console.log(`player turn started `);
-    game.randomNGHitConnect() // NOTE testing only
+    console.log(`awaiting weapon select`)
+    // game.randomNGHitConnect() // NOTE testing only
+  },
+  pressWeaponSelect() {
+    console.log (`${this.selectedWeapon} selected`);
+    console.log (`awaiting target area select`);
+  },
+  pressTargetSelect() {
+    console.log (`${this.currentTarget} selected`)
+    console.log(`activating randomNGHitConnect `)
+    this.randomNGHitConnect();
+
   },
   opponentTurn(){
     this.playerAttackPhase = false;
@@ -171,15 +182,15 @@ game = {
       }else {
         console.log(`something broke at turn switcher`)
       }
-  }
-},
-gameRandomNum () {
-  return Math.random()*100; 
-},  
-applyDamageAndDisplay() {
-  console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-      this.applyDamage();
-},
+    }
+  },
+  gameRandomNum () {
+    return Math.random()*100; 
+  },  
+  applyDamageAndDisplay() {
+    console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+        this.applyDamage();
+  },
   randomNGHitConnect (){
     let rNGTotal = Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus);
     if (rNGTotal>50){
@@ -375,7 +386,7 @@ applyDamageAndDisplay() {
 
 //jQuery
   // START GAME
-  $startGame = (`#start-game`)
+  $startGame = $(`#temporary-start`)
 
   // ENEMY ROBOT
   $opponent = $(`.opponent`)
@@ -417,40 +428,47 @@ applyDamageAndDisplay() {
   // STEP 13
   // EVENT LISTENERS
   // START GAME
-  // $startGame.on(`click`, function(event){
-  //   console.log(`$startGame clicked`);
-  // });
+  $startGame.on(`click`, function(event){
+    console.log(`$startGame clicked`);
+    game.gameStartSet()
+  });
 
   // WEAPON SELECTION
   $selectSword.on(`click`, function(event){
     console.log(`$selectSword clicked`);
     game.selectedWeapon = player.sword;
+    game.pressWeaponSelect();
   });
 
   $selectGun.on(`click`, function(event){
     console.log(`$selectGun clicked`);
     game.selectedWeapon = player.gun;
+    game.pressWeaponSelect();
   });
 
   // TARGET AREA SELECT
   $attackLeft.on(`click`, function(event){
     console.log(`$attackLeft clicked`);
     game.selectedZone = "left" ;
+    pressTargetSelect() ;
   });
 
   $attackBody.on(`click`, function(event){
     console.log(`$attackBody clicked`);
     game.selectedZone = "up" ;
+    pressTargetSelect() ;
   });
 
   $attackRight.on(`click`, function(event){
     console.log(`$attackRight clicked`);
     game.selectedZone = "right" ;
+    pressTargetSelect() ;
   });
 
   $attackLegs.on(`click`, function(event){
     console.log(`$attackLegs clicked`);
-    game.selectedZone = "down"
+    game.selectedZone = "down" ;
+    pressTargetSelect() ;
   });
 
   // POST BATTLE
