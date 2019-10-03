@@ -98,6 +98,8 @@ const opponent = new Robot ("opponent", opponentBody, opponentLeftHand, opponent
 
 
 game = {
+  // Variables
+
   start: false,
   ended: false,
   baseEvade: 0,
@@ -108,21 +110,8 @@ game = {
   selectedWeapon: undefined,
   selectedZone: undefined,
   targetPart: undefined,
-  // $opponent: $(`.opponent`),
-  // $opponentGun: $(`#opponent-gun`),
-  // $opponentRightArm: $(`#opponent-right-arm`),
-  // $opponentBody: $(`#opponent-body`),
-  // $opponentLeftArm: $(`#opponent-left-arm`),
-  // $opponentSword: $(`#opponent-sword`),
-  // $attackSummary: $(`#attack-summary`),
-  // $next: $(`#next`),
-  // $selectSword: $(`#select-sword`),
-  // $selectGun: $(`#select-gun`),
-  // $damageIndicator: $(`#damage-indicator`),
-  // $playerSword: $(`#player-sword`),
-  // $playerGun: $(`#player-gun`)
 
-
+  // GAME METHODS
 
   gameStartSet() {
     console.log(`game start`);
@@ -329,7 +318,7 @@ applyDamageAndDisplay() {
       console.log (`opponent auto selected sword`)
     } else {
       this.selectedWeapon = opponent.gun;
-      console.log (`opponent auto selected gun`) // NOTE GREVIOUS ERROR FIXED
+      console.log (`opponent auto selected gun`) // NOTE GRIEVOUS ERROR FIXED. GRIEVOUS SPELLING ERRROR FIXED
     }
   },
   opponentAutoSelectArea (){
@@ -374,10 +363,98 @@ applyDamageAndDisplay() {
 // STEP 10
 // testing out one round 
 
+// STEP 11
+// HTML & CSS V1
+
+// STEP 12
+// jQuery Selectors
+
+//jQuery
+  // START GAME
+  $startGame = (`#start-game`)
+
+  // ENEMY ROBOT
+  $opponent = $(`.opponent`)
+  $opponentGun = $(`#opponent-gun`)
+  $opponentRightArm = $(`#opponent-right-arm`)
+  $opponentBody = $(`#opponent-body`)
+  $opponentLeftArm = $(`#opponent-left-arm`)
+  $opponentSword = $(`#opponent-sword`)
+
+  // WEAPON SELECT
+  $selectSword = $(`#select-sword`)
+  $selectGun = $(`#select-gun`)
+
+
+  // TARGET AREA SELECT
+  $attackLeft = $(`#attack-left`)
+  $attackBody = $(`#attack-body`)
+  $attackRight = $(`#attack-right`)
+  $attackLegs = $(`#attack-leg`)
+
+  // POST BATTLE
+  $attackSummary = $(`#attack-summary`)
+  $next = $(`#next`)
+  
+  // GAME ICONS
+  $damageIndicator = $(`#damage-indicator`)
+  $healthPoint = $(`#health-point`)
+
+  // PLAYER STATUS
+  $playerSword = $(`#player-sword`)
+  $playerLeftArm = $(`#player-left-arm`)
+  $playerLeftLeg = $(`#player-left-leg`)
+  $playerBody = $(`#player-body`)
+  $playerRightLeg = $(`#player-right-leg`)
+  $playerRightArm = $(`#player-right-arm`)
+  $playerGun = $(`#player-gun`)
+  
+  
+  // STEP 13
+  // EVENT LISTENERS
+  // START GAME
+  $startGame.on(`click`, function(event){
+    console.log(`$startGame clicked`);
+  });
+
+  // WEAPON SELECTION
+  $selectSword.on(`click`, function(event){
+    console.log(`$selectSword clicked`);
+  });
+  $selectGun.on(`click`, function(event){
+    console.log(`$selectGun clicked`);
+  });
+
+  // TARGET AREA SELECT
+  $attackLeft.on(`click`, function(event){
+    console.log(`$attackLeft clicked`);
+  });
+  $attackBody.on(`click`, function(event){
+    console.log(`$attackBody clicked`);
+  });
+  $attackRight.on(`click`, function(event){
+    console.log(`$attackRight clicked`);
+  });
+  $attackLegs.on(`click`, function(event){
+    console.log(`$attackLegs clicked`);
+  });
+
+  // POST BATTLE
+  $next.on(`click`, function(event){
+    console.log(`$next clicked`);
+  });
+  
+  
+
+
+
+// game.$selectGun.
 // game start
-game.selectedWeapon = player.sword; // ANCHOR testing only
-game.selectedZone = "up"; // ANCHOR testing only
-game.gameStartSet();
+// game.selectedWeapon = player.sword; // ANCHOR testing only
+// game.selectedZone = "up"; // ANCHOR testing only
+// game.gameStartSet();
+
+// game.activateEventListener();
 
 // weapon select
 // console.log(game.selectedWeapon);
@@ -395,12 +472,4 @@ game.gameStartSet();
 
 // game.applyDamage()
 
-// STEP 11
-// HTML & CSS V1
-
-// STEP 12
-// jQuery Selectors
-
-// STEP 13
-// event listeners
 
