@@ -52,8 +52,8 @@ class Part {
 const playerBody = new Part ("playerBody",6,6,true,0,0,0,0);
 const playerLeftHand = new Part ("playerLeftHand", 3,3,true,0,0,0);
 const playerRightHand = new Part ("playerRighthand",3,3,true,0,0,0);
-const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,7.5);
-const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,0,7.5);
+const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,5);
+const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,5);
 const playerSword = new Part ("playerSword",0,0,true,1,75,0);
 const playerGun = new Part ("playerGun",0,0,true,2,60,0);
 
@@ -61,8 +61,8 @@ const playerGun = new Part ("playerGun",0,0,true,2,60,0);
 const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,0);
 const opponentLeftHand = new Part ("opponentLeftHand",3,3,true,0,0,0);
 const opponentRightHand = new Part ("opponentRightHand",3,3,true,0,0,0);
-const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,5,0);
-const opponentRightLeg = new Part ("opponentRightLeg",3,3,true,0,0,5,0);
+const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,0,5);
+const opponentRightLeg = new Part ("opponentRightLeg",3,3,true,0,0,5);
 const opponentSword = new Part ("opponentSword",0,0,true,1,75,0);
 const opponentGun = new Part ("opponentGun",0,0,true,2,60,0);
 
@@ -114,6 +114,7 @@ game = {
   // GAME METHODS
 
   gameStartSet() {
+    this.startGameVisibility();
     console.log(`game start`);
     this.start = true;
     this.playerTurn();
@@ -137,6 +138,7 @@ game = {
   pressWeaponSelect() {
     console.log (`${this.selectedWeapon.name} selected`);
     console.log (`awaiting target area select`);
+    this.showTargetingAreas();
   },
   pressTargetSelect() {
     console.log (`${this.selectedZone} selected`)
@@ -204,6 +206,7 @@ game = {
     } else {
       console.log(`rng hit missed - ${rNGTotal}`);
       this.attackMissed ();
+      areaSelectedVisibilityMissed
     }
   },
   attackMissed (){
@@ -325,7 +328,8 @@ game = {
     }
   },
   awaitNextButton () {
-    console.log(`${this.currentPlayer.name} actions completed - summary`)
+    console.log(`${this.currentPlayer.name} actions completed - summary`);
+    this.toggleEndTurnButton();
     console.log(`print out some data - click end turn`)
 
   },
@@ -375,7 +379,64 @@ game = {
     this.targetPart = undefined;
     console.log(`GAME SHOULD STOP HERE`)
     return `game ended`
+  },
+  toggleStartGameButton() {
+    $startGame.toggleClass(`hidden`);
+  },
+  toggleAttackLeft() {
+    $attackLeft.toggleClass(`hidden`);
+  },
+  toggleAttackBody() {
+    $attackBody.toggleClass(`hidden`);
+  },
+  toggleAttackRight() {
+    $attackRight.toggleClass(`hidden`);
+  },
+  toggleAttackLegs() {
+    $attackLegs.toggleClass(`hidden`);
+  },
+  toggleAttackSummary() {
+    $attackSummary.toggleClass(`hidden`);
+  },
+  toggleNextButton() {
+    $next.toggleClass(`hidden`);
+  },
+  toggleEndTurnButton() {
+    $endTurn.toggleClass(`hidden`);
+  },
+  toggleSelectSword() {
+    $selectSword.toggleClass(`hidden`);
+  },
+  toggleSelectGun() {
+    $selectGun.toggleClass(`hidden`);
+  },
+  startGameVisibility () {
+    this.toggleStartGameButton();
+    this.toggleAttackLeft();
+    this.toggleAttackRight();
+    this.toggleAttackBody();
+    this.toggleAttackLegs();
+    this.toggleAttackSummary();
+    this.toggleNextButton();
+    this.toggleEndTurnButton();
+  },
+  toggleWeaponSelection () {
+    this.toggleSelectSword();
+    this.toggleSelectGun();
+  },
+  toggleEndTurnButton () {
+    this.toggleEndTurnButton();
+  },
+  missedVisibility () {
+   console.log(`placeholder for now`);
+  },
+  showTargetingAreas () {
+    this.toggleAttackLeft();
+    this.toggleAttackRight();
+    this.toggleAttackBody();
+    this.toggleAttackLegs();
   }
+
 }
 
 
@@ -442,12 +503,14 @@ game = {
   $selectSword.on(`click`, function(event){
     console.log(`$selectSword clicked`);
     game.selectedWeapon = player.sword;
+    game.toggleWeaponSelection();
     game.pressWeaponSelect();
   });
 
   $selectGun.on(`click`, function(event){
     console.log(`$selectGun clicked`);
     game.selectedWeapon = player.gun;
+    game.weaponSelectedVisibility();
     game.pressWeaponSelect();
   });
 
@@ -488,6 +551,27 @@ game = {
   })
   
   
+// STEP 13
+// Hiding & Showing items during each phase
+// game start
+// player weapon select
+// player area select
+// player hit/miss
+// opponent summary
+// game over
+
+// STEP 14
+// Printing out HP on parts
+
+// STEP 15
+// DAMAGE INDICATORS
+
+// STEP 16
+// BATTLE SUMMARY
+
+// STEP 17
+// MISS INDICATOR
+
 
 
 

@@ -137,6 +137,7 @@ body {
   font-size: 7em;
 }
 
+
 /* AREA SELECT SECTION */
 
 .attack-area {
@@ -261,6 +262,10 @@ body {
   display: none;
   color: green;
   font-size: 3em;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 
