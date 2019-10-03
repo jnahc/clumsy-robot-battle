@@ -301,14 +301,18 @@ applyDamageAndDisplay() {
           this.currentTarget.gun.functioning = false
           console.log(`${this.currentTarget.name}'s gun is broken`);
         }
-        this.turnSwitcher()
+        this.awaitNextButton()
       } else {
         this.targetPart.currentHP = damagedPartHP;
         console.log(`${this.targetPart.name} has been damaged`)
-        this.turnSwitcher()
+        this.awaitNextButton()
       }
     }
-    
+  },
+  awaitNextButton () {
+    console.log(`awaiting next button to be perssed`);
+    this.turnSwitcher()
+
   },
   opponentAutoSelectWeapon (){
     console.log(`opponent auto select weapon`);
@@ -413,35 +417,46 @@ applyDamageAndDisplay() {
   // STEP 13
   // EVENT LISTENERS
   // START GAME
-  $startGame.on(`click`, function(event){
-    console.log(`$startGame clicked`);
-  });
+  // $startGame.on(`click`, function(event){
+  //   console.log(`$startGame clicked`);
+  // });
 
   // WEAPON SELECTION
   $selectSword.on(`click`, function(event){
     console.log(`$selectSword clicked`);
+    game.selectedWeapon = player.sword;
   });
+
   $selectGun.on(`click`, function(event){
     console.log(`$selectGun clicked`);
+    game.selectedWeapon = player.gun;
   });
 
   // TARGET AREA SELECT
   $attackLeft.on(`click`, function(event){
     console.log(`$attackLeft clicked`);
+    game.selectedZone = "left" ;
   });
+
   $attackBody.on(`click`, function(event){
     console.log(`$attackBody clicked`);
+    game.selectedZone = "up" ;
   });
+
   $attackRight.on(`click`, function(event){
     console.log(`$attackRight clicked`);
+    game.selectedZone = "right" ;
   });
+
   $attackLegs.on(`click`, function(event){
     console.log(`$attackLegs clicked`);
+    game.selectedZone = "down"
   });
 
   // POST BATTLE
   $next.on(`click`, function(event){
     console.log(`$next clicked`);
+    game.awaitNextButton()
   });
   
   
