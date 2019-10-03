@@ -133,12 +133,13 @@ game = {
     this.currentPlayer = player;
     console.log(`player turn started `);
     console.log(`awaiting weapon select`)
+    this.toggleWeaponSelection();
     // game.randomNGHitConnect() // NOTE testing only
   },
   pressWeaponSelect() {
     console.log (`${this.selectedWeapon.name} selected`);
     console.log (`awaiting target area select`);
-    this.showTargetingAreas();
+    this.toggleTargetingAreas();
   },
   pressTargetSelect() {
     console.log (`${this.selectedZone} selected`)
@@ -173,6 +174,7 @@ game = {
   },
   endTurn() {
     console.log(`${this.currentPlayer.name} turn ended`)
+    this.playerTurnEndVisibility();
     this.turnSwitcher();
   },
   turnSwitcher(){
@@ -191,13 +193,16 @@ game = {
     }
   },
   gameRandomNum () {
-    return Math.random()*100; 
+    return Math.random()*100;  
   },  
   applyDamageAndDisplay() {
     console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
         this.applyDamage();
   },
   randomNGHitConnect (){
+    if (this.currentPlayer === player){
+      this.toggleTargetingAreas();
+    }
     let rNGTotal = Math.random()*(15+this.selectedWeapon.accuracy-this.currentTarget.dodgeBonus);
     if (rNGTotal>50){
       console.log(`rng hit success - ${rNGTotal}`);
@@ -206,12 +211,15 @@ game = {
     } else {
       console.log(`rng hit missed - ${rNGTotal}`);
       this.attackMissed ();
-      areaSelectedVisibilityMissed
     }
   },
   attackMissed (){
     console.log(`Attack missed!`);
+    // if (this.currentPlayer === player){
     this.awaitNextButton();
+    // } else {
+
+    // }
   },
   attackUpArea() {
     let randomNum = this.gameRandomNum();
@@ -319,9 +327,11 @@ game = {
           this.currentTarget.gun.functioning = false
           console.log(`${this.currentTarget.name}'s gun is broken`);
         }
+        this.damageSuccessShow();
         console.log(`awaiting next button to be pressed`);
       } else {
         this.targetPart.currentHP = damagedPartHP;
+        this.damageSuccessShow();
         console.log(`${this.targetPart.name} has been damaged`)
         console.log(`awaiting next button to be pressed`);
       }
@@ -329,7 +339,7 @@ game = {
   },
   awaitNextButton () {
     console.log(`${this.currentPlayer.name} actions completed - summary`);
-    this.toggleEndTurnButton();
+    this.turnOverVisibility();
     console.log(`print out some data - click end turn`)
 
   },
@@ -419,23 +429,38 @@ game = {
     this.toggleAttackSummary();
     this.toggleNextButton();
     this.toggleEndTurnButton();
+    this.toggleWeaponSelection();
   },
   toggleWeaponSelection () {
     this.toggleSelectSword();
     this.toggleSelectGun();
   },
-  toggleEndTurnButton () {
+  damageSuccessShow() {
+    this.toggleNextButton();
+  },
+  turnOverVisibility () {
+    if ($next.hasClass(`hidden`) === false){
+      $next.addClass(`hidden`)
+    }
+    this.toggleAttackSummary();
     this.toggleEndTurnButton();
   },
   missedVisibility () {
    console.log(`placeholder for now`);
   },
-  showTargetingAreas () {
+  toggleTargetingAreas () {
     this.toggleAttackLeft();
     this.toggleAttackRight();
     this.toggleAttackBody();
     this.toggleAttackLegs();
+  },
+  playerTurnEndVisibility () {
+    this.toggleEndTurnButton() ;
+    this.toggleAttackSummary ();
+    // this.toggleWeaponSelection() ;
   }
+
+  
 
 }
 
@@ -477,9 +502,10 @@ game = {
   $next = $(`#next`)
   $endTurn = $(`#end-turn`)
   
-  // GAME ICONS
+  // GAME MISC
   $damageIndicator = $(`#damage-indicator`)
   $healthPoint = $(`#health-point`)
+  $currentPlayer = $(`#current-player`)
 
   // PLAYER STATUS
   $playerSword = $(`#player-sword`)
@@ -510,7 +536,7 @@ game = {
   $selectGun.on(`click`, function(event){
     console.log(`$selectGun clicked`);
     game.selectedWeapon = player.gun;
-    game.weaponSelectedVisibility();
+    game.toggleWeaponSelection();
     game.pressWeaponSelect();
   });
 
