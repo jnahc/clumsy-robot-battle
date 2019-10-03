@@ -24,7 +24,7 @@ header {
 
 .title {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
 
 }
@@ -208,18 +208,17 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 80%;
-  margin-bottom: -10%;
+  /* margin-bottom: -10%; */
+  z-index: 1;
 }
 
 #player-health-status {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-top: -10%;
 }
 
-.player-status {
+#player-health-status .player-status {
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
