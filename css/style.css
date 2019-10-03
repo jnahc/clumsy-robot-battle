@@ -11,25 +11,32 @@
 } */
 
 
-
 /* HEADER SECTION */
 
 header {
-  width: 100%;
-  position: fixed;
+  max-width: 980px;
+  display: flex ;
+  flex-direction: column;
+  /* position: fixed;
   top: 0;
-  left: 0;
+  left: 0; */
   z-index: 1;
 }
 
 .title {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
+ 
 
 }
 
 /* BODY */
+
+body {
+  max-width: 980px;
+}
+
 
 
 .main-game {
@@ -39,7 +46,7 @@ header {
   align-items: center;
   background: silver;
   height: 90vh;
-  width: 100%;
+  width:100% ;
 }
 
 /* ENEMY ROBOT SECTION */
@@ -47,9 +54,11 @@ header {
 .opponent {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: flex-start;
+  align-items: center;
   width: 66%;
-  height: 50vh;
+  height: 60vh;
+  margin-top: -10% ;
 
 }
 
@@ -126,6 +135,44 @@ header {
 #opponent-sword{
   font-size: 7em;
 }
+
+/* AREA SELECT SECTION */
+
+.attack-area {
+  display: flex;
+  flex-direction: column;
+  width: 50% ;
+  height: 50vh ;
+  /* padding-top: 5%; */
+  /* margin-top: 5% ; */
+  margin-bottom: -20%;
+  justify-content: flex-end;
+  z-index: 1;
+  color: rgba(0,0,0,0.5);
+
+}
+
+.attack-top-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* margin-bottom: -20%; */
+
+}
+
+.attack-bottom-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* margin-bottom:  */
+
+}
+
+.fa-crosshairs {
+  font-size: 10em;
+}
+
+
 
 /* SELECT WEAPON SECTION */
 .selection {
