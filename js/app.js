@@ -50,7 +50,7 @@ class Part {
     }
   }
   damageIndicator(){
-    this.selector.addClass(`damage-indicator`)
+    this.selector.toggleClass(`damage-indicator`)
   }
 }
 
@@ -263,6 +263,10 @@ game = {
     } 
   },
   endTurn() {
+    if (this.targetPart !== undefined){
+      this.targetPart.damageIndicator();
+    }
+    this.targetPart = undefined;
     console.log(`${this.currentPlayer.name} turn ended`)
     this.playerTurnEndVisibility();
     this.turnSwitcher();
@@ -287,7 +291,7 @@ game = {
   },  
   applyDamageAndDisplay() {
     console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-    this.targetPart.damageIndicator();
+    // this.targetPart.damageIndicator(); this prints out too late
     this.applyDamage();
   },
   randomNGHitConnect (){
@@ -425,6 +429,7 @@ game = {
       } else {
         this.targetPart.currentHP = damagedPartHP;
         this.targetPart.updateHitPoints();
+        this.targetPart.damageIndicator()
         this.damageSuccessShow();
         console.log(`${this.targetPart.name} has been damaged`)
         console.log(`awaiting next button to be pressed`);
@@ -541,6 +546,11 @@ game = {
     if ($next.hasClass(`hidden`) === false){
       $next.addClass(`hidden`)
     }
+    // if (this.targetPart !== undefined){
+    //   this.targetPart.damageIndicator();
+    // }
+    // TOO EARLY
+    
     this.toggleAttackSummary();
     this.toggleEndTurnButton();
   },
@@ -554,6 +564,10 @@ game = {
     this.toggleAttackLegs();
   },
   playerTurnEndVisibility () {
+    // if (this.targetPart !== undefined){
+    //   this.targetPart.damageIndicator();
+    // }
+    // not a good place for damage indicator
     this.toggleEndTurnButton() ;
     this.toggleAttackSummary ();
     // this.toggleWeaponSelection() ;
@@ -658,6 +672,8 @@ game = {
 // MISS INDICATOR
 
 
+// STEP 18
+// COOL GRAPHICS
 
 
 // game.$selectGun.

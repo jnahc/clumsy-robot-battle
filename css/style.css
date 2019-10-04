@@ -233,8 +233,8 @@ body {
 }
 
 #attack-summary {
-  width: 150px;
-  height: 100px;
+  width: 175px;
+  height: 175px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
   background-color: steelblue;
   border: 2px solid black;
@@ -265,6 +265,8 @@ body {
 
 .damage-indicator {
   color: red;
+  background-color: orange;
+  box-shadow: -5px -5px 30px 5px red, 5px 5px 30px 5px orange;
 }
 
 #damage-indicator {
@@ -291,8 +293,17 @@ body {
   padding: 20px;
 }
 
+#missed {
+  font-size: 20em;
+
+}
+
 .hidden {
   visibility: hidden;
+}
+
+.display-none {
+  display: none;
 }
 
 
