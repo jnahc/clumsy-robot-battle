@@ -17,6 +17,14 @@ class Robot {
     this.gun = gun; //gun
     this.dodgeBonus = this.leftLeg.dodgeValue + this.rightLeg.dodgeValue
   }
+  disarmSelf(){
+    if (this.leftHand.functioning===false){
+      this.sword.selector.addClass(`hidden`);
+    } else if (this.rightHand.functioning===false){
+      this.gun.selector.addClass(`hidden`)
+    }
+  }
+ 
 }
 
 class Part {
@@ -31,12 +39,64 @@ class Part {
     this.selector = selector;
   }
   updateHitPoints(){
+      this.selector.empty();
     for(let i=0;i <this.currentHP; i++){
-      this.selector.append(`<div id="health-point"><i class="fas fa-minus"></i></div> `)
+      this.selector.append(`<div id="health-point">|</div> `)
     }
+  }
+  removeSelf(){
+    if (this.functioning===false){
+      this.selector.addClass(`hidden`);
+    }
+  }
+  damageIndicator(){
+    this.selector.addClass(`damage-indicator`)
   }
 }
 
+//jQuery
+  // START GAME
+  $startGame = $(`#temporary-start`)
+
+  // ENEMY ROBOT
+  $opponent = $(`.opponent`)
+  $opponentGun = $(`#opponent-gun`)
+  $opponentRightArm = $(`#opponent-right-arm`)
+  $opponentBody = $(`#opponent-body`)
+  $opponentLeftArm = $(`#opponent-left-arm`)
+  $opponentSword = $(`#opponent-sword`)
+  $opponentLeftLeg = $(`#opponent-left-leg`)
+  $opponentRightLeg = $(`#opponent-right-leg`)
+
+  // WEAPON SELECT
+  $selectSword = $(`#select-sword`)
+  $selectGun = $(`#select-gun`)
+
+
+  // TARGET AREA SELECT
+  $attackLeft = $(`#attack-left`)
+  $attackBody = $(`#attack-body`)
+  $attackRight = $(`#attack-right`)
+  $attackLegs = $(`#attack-leg`)
+
+  // POST BATTLE
+  $attackSummary = $(`#attack-summary`)
+  $next = $(`#next`)
+  $endTurn = $(`#end-turn`)
+  
+  // GAME MISC
+  $damageIndicator = $(`#damage-indicator`)
+  $healthPoint = $(`#health-point`)
+  $currentPlayer = $(`#current-player`)
+
+  // PLAYER STATUS
+  $playerSword = $(`#player-sword`)
+  $playerLeftArm = $(`#player-left-arm`)
+  $playerLeftLeg = $(`#player-left-leg`)
+  $playerBody = $(`#player-body`)
+  $playerRightLeg = $(`#player-right-leg`)
+  $playerRightArm = $(`#player-right-arm`)
+  $playerGun = $(`#player-gun`)
 
 
 // STEP 2 
@@ -55,11 +115,11 @@ class Part {
 // Create Robot Parts
 
 // Player Parts
-const playerBody = new Part ("playerBody",6,6,true,0,0,0,0,$playerBody);
+const playerBody = new Part ("playerBody",6,6,true,0,0,0,$playerBody);
 const playerLeftHand = new Part ("playerLeftHand", 3,3,true,0,0,0,$playerLeftArm);
 const playerRightHand = new Part ("playerRighthand",3,3,true,0,0,0,$playerRightArm);
 const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,5,$playerLeftLeg);
-const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,5,$playerRightLeg),;
+const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,5,$playerRightLeg);
 const playerSword = new Part ("playerSword",0,0,true,1,75,0);
 const playerGun = new Part ("playerGun",0,0,true,2,60,0);
 const playerPartsArr = [
@@ -71,7 +131,7 @@ const playerPartsArr = [
 ]
 
 // Opponent Parts
-const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,0,$opponentBody);
+const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,$opponentBody);
 const opponentLeftHand = new Part ("opponentLeftHand",3,3,true,0,0,0,$opponentLeftArm);
 const opponentRightHand = new Part ("opponentRightHand",3,3,true,0,0,0,$opponentRightArm);
 const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,0,5,$opponentLeftLeg);
@@ -149,6 +209,7 @@ game = {
     }
   },
   addHitPoints (arr){
+    console.log(`populating hit points`);
     for (let i=0; i<arr.length; i++){
       arr[i].updateHitPoints()
     }
@@ -226,7 +287,8 @@ game = {
   },  
   applyDamageAndDisplay() {
     console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
-        this.applyDamage();
+    this.targetPart.damageIndicator();
+    this.applyDamage();
   },
   randomNGHitConnect (){
     if (this.currentPlayer === player){
@@ -357,9 +419,12 @@ game = {
           console.log(`${this.currentTarget.name}'s gun is broken`);
         }
         this.damageSuccessShow();
+        this.targetPart.removeSelf()
+        this.targetPart.updateHitPoints();
         console.log(`awaiting next button to be pressed`);
       } else {
         this.targetPart.currentHP = damagedPartHP;
+        this.targetPart.updateHitPoints();
         this.damageSuccessShow();
         console.log(`${this.targetPart.name} has been damaged`)
         console.log(`awaiting next button to be pressed`);
@@ -492,14 +557,7 @@ game = {
     this.toggleEndTurnButton() ;
     this.toggleAttackSummary ();
     // this.toggleWeaponSelection() ;
-  },
-  healthStatusAppender (arr) {
-    for (let i=0;i<arr.h)
-
   }
-
-  
-
 }
 
 
@@ -512,49 +570,7 @@ game = {
 // STEP 12
 // jQuery Selectors
 
-//jQuery
-  // START GAME
-  $startGame = $(`#temporary-start`)
 
-  // ENEMY ROBOT
-  $opponent = $(`.opponent`)
-  $opponentGun = $(`#opponent-gun`)
-  $opponentRightArm = $(`#opponent-right-arm`)
-  $opponentBody = $(`#opponent-body`)
-  $opponentLeftArm = $(`#opponent-left-arm`)
-  $opponentSword = $(`#opponent-sword`)
-  $opponentLeftLeg = $(`#opponent-left-leg`)
-  $opponentRightLeg = $(`#opponent-right-leg`)
-
-  // WEAPON SELECT
-  $selectSword = $(`#select-sword`)
-  $selectGun = $(`#select-gun`)
-
-
-  // TARGET AREA SELECT
-  $attackLeft = $(`#attack-left`)
-  $attackBody = $(`#attack-body`)
-  $attackRight = $(`#attack-right`)
-  $attackLegs = $(`#attack-leg`)
-
-  // POST BATTLE
-  $attackSummary = $(`#attack-summary`)
-  $next = $(`#next`)
-  $endTurn = $(`#end-turn`)
-  
-  // GAME MISC
-  $damageIndicator = $(`#damage-indicator`)
-  $healthPoint = $(`#health-point`)
-  $currentPlayer = $(`#current-player`)
-
-  // PLAYER STATUS
-  $playerSword = $(`#player-sword`)
-  $playerLeftArm = $(`#player-left-arm`)
-  $playerLeftLeg = $(`#player-left-leg`)
-  $playerBody = $(`#player-body`)
-  $playerRightLeg = $(`#player-right-leg`)
-  $playerRightArm = $(`#player-right-arm`)
-  $playerGun = $(`#player-gun`)
 
   
   // STEP 13
@@ -629,8 +645,11 @@ game = {
 // STEP 14
 // Printing out HP on parts
 
+
 // STEP 15
-// DAMAGE INDICATORS
+// Not functioning removed
+// Added methods 
+// DAMAGE INDICATORS ****
 
 // STEP 16
 // BATTLE SUMMARY
