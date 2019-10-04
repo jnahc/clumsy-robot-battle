@@ -295,6 +295,7 @@ body {
 
 #missed {
   font-size: 20em;
+  z-index:10;
 
 }
 

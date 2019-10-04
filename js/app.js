@@ -81,6 +81,7 @@ class Part {
 
   // POST BATTLE
   $attackSummary = $(`#attack-summary`)
+  $attackLog = $(`#log`)
   $next = $(`#next`)
   $endTurn = $(`#end-turn`)
   
@@ -115,13 +116,13 @@ class Part {
 // Create Robot Parts
 
 // Player Parts
-const playerBody = new Part ("playerBody",6,6,true,0,0,0,$playerBody);
-const playerLeftHand = new Part ("playerLeftHand", 3,3,true,0,0,0,$playerLeftArm);
-const playerRightHand = new Part ("playerRighthand",3,3,true,0,0,0,$playerRightArm);
-const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,5,$playerLeftLeg);
-const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,5,$playerRightLeg);
-const playerSword = new Part ("playerSword",0,0,true,1,75,0);
-const playerGun = new Part ("playerGun",0,0,true,2,60,0);
+const playerBody = new Part ("Body",6,6,true,0,0,0,$playerBody);
+const playerLeftHand = new Part ("Left Hand", 3,3,true,0,0,0,$playerLeftArm);
+const playerRightHand = new Part ("Right Hand",3,3,true,0,0,0,$playerRightArm);
+const playerLeftLeg = new Part ("Left Leg",3,3,true,0,0,5,$playerLeftLeg);
+const playerRightLeg = new Part ("Right Leg",3,3,true,0,0,5,$playerRightLeg);
+const playerSword = new Part ("Sword",0,0,true,1,75,0);
+const playerGun = new Part ("Gun",0,0,true,2,60,0);
 const playerPartsArr = [
   playerBody,
   playerLeftHand,
@@ -131,13 +132,13 @@ const playerPartsArr = [
 ]
 
 // Opponent Parts
-const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,$opponentBody);
-const opponentLeftHand = new Part ("opponentLeftHand",3,3,true,0,0,0,$opponentLeftArm);
-const opponentRightHand = new Part ("opponentRightHand",3,3,true,0,0,0,$opponentRightArm);
-const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,0,5,$opponentLeftLeg);
-const opponentRightLeg = new Part ("opponentRightLeg",3,3,true,0,0,5,$opponentRightLeg);
-const opponentSword = new Part ("opponentSword",0,0,true,1,75,0);
-const opponentGun = new Part ("opponentGun",0,0,true,2,60,0);
+const opponentBody = new Part ("Body",6,6,true,0,0,0,$opponentBody);
+const opponentLeftHand = new Part ("Left Hand",3,3,true,0,0,0,$opponentLeftArm);
+const opponentRightHand = new Part ("Right Hand",3,3,true,0,0,0,$opponentRightArm);
+const opponentLeftLeg = new Part ("Left Leg",3,3,true,0,0,5,$opponentLeftLeg);
+const opponentRightLeg = new Part ("Right Leg",3,3,true,0,0,5,$opponentRightLeg);
+const opponentSword = new Part ("Sword",0,0,true,1,75,0);
+const opponentGun = new Part ("Gun",0,0,true,2,60,0);
 const opponentPartsArr = [
   opponentBody,
   opponentLeftHand,
@@ -150,8 +151,8 @@ const opponentPartsArr = [
 // STEP 4
 // Create Robots
 
-const player = new Robot ("player", playerBody, playerLeftHand, playerRightHand, playerLeftLeg, playerRightLeg, playerSword, playerGun);
-const opponent = new Robot ("opponent", opponentBody, opponentLeftHand, opponentRightHand, opponentLeftLeg, opponentRightLeg, opponentSword, opponentGun);
+const player = new Robot ("Player", playerBody, playerLeftHand, playerRightHand, playerLeftLeg, playerRightLeg, playerSword, playerGun);
+const opponent = new Robot ("Opponent", opponentBody, opponentLeftHand, opponentRightHand, opponentLeftLeg, opponentRightLeg, opponentSword, opponentGun);
 
 // STEP 5
 // Create RNG functions for each zone - zone
@@ -268,6 +269,7 @@ game = {
     }
     this.targetPart = undefined;
     console.log(`${this.currentPlayer.name} turn ended`)
+    $attackLog.empty();
     this.playerTurnEndVisibility();
     this.turnSwitcher();
   },
@@ -291,6 +293,7 @@ game = {
   },  
   applyDamageAndDisplay() {
     console.log(`target part: ${this.targetPart.name} - current target: ${this.currentTarget.name}`);
+    // $attackLog.append(`<li>${this.currentPlayer.name} is targeting ${this.currentTarget.name}'s ${this.targetPart.name}</li>`);
     // this.targetPart.damageIndicator(); this prints out too late
     this.applyDamage();
   },
@@ -310,11 +313,9 @@ game = {
   },
   attackMissed (){
     console.log(`Attack missed!`);
-    // if (this.currentPlayer === player){
+    $attackLog.append(`<li>${this.currentPlayer.name} attack missed! </li>`);
     this.awaitNextButton();
-    // } else {
-
-    // }
+  
   },
   attackUpArea() {
     let randomNum = this.gameRandomNum();
@@ -415,12 +416,24 @@ game = {
         this.targetPart.currentHP = 0;
         this.targetPart.functioning = false;
         console.log(`${this.targetPart.name} has been broken`)
+        $attackLog.append(`
+        <li>Attack Successful!</li>
+        <li>${this.currentPlayer.name}'s ${this.selectedWeapon.name} has destroyed ${this.currentTarget.name}'s ${this.targetPart.name}.</li>
+        `)
         if (this.targetPart.name==="opponentLeftHand"||this.targetPart.name==="playerLeftHand"){
           this.currentTarget.sword.functioning = false
           console.log(`${this.currentTarget.name}'s sword is broken`);
+          $attackLog.append(`
+        <li>Weapon Disabled!</li>
+        <li>${this.currentTarget.name}'s sword has been disabled.</li>
+        `)
         }else if (this.targetPart.name==="opponentRightHand"||this.targetPart.name==="playerRightHand"){
           this.currentTarget.gun.functioning = false
           console.log(`${this.currentTarget.name}'s gun is broken`);
+          $attackLog.append(`
+        <li>Weapon Disabled!<li>
+        <li>${this.currentTarget.name}'s gun has been disabled.</li>
+        `)
         }
         this.damageSuccessShow();
         this.targetPart.removeSelf()
@@ -428,6 +441,10 @@ game = {
         console.log(`awaiting next button to be pressed`);
       } else {
         this.targetPart.currentHP = damagedPartHP;
+        $attackLog.append(`
+        <li>Attack Successful!</li>
+        <li>${this.currentPlayer.name}'s ${this.selectedWeapon.name} has struck ${this.currentTarget.name}'s ${this.targetPart.name} for ${this.selectedWeapon.damageValue} damage.</li>
+        `)
         this.targetPart.updateHitPoints();
         this.targetPart.damageIndicator()
         this.damageSuccessShow();
@@ -471,7 +488,7 @@ game = {
     } 
   },
   displayCurrentPlayer (){
-    $currentPlayer.html(`<p>Currently Playing:</p>
+    $currentPlayer.html(`<p>Currently Active:</p>
     <p>${this.currentPlayer.name}</p>`)
 
   },
@@ -667,12 +684,19 @@ game = {
 
 // STEP 16
 // BATTLE SUMMARY
+// MISSED
+// ATTACK SUCCESS
+// PART BREAKS
 
 // STEP 17
+// REMOVE WEAPON OPTIONS AFTER DESTROYED
+// REMOVE WEAPON GRAPHIC AFTER DESTROYED
+
+
+// STEP 17234234
 // MISS INDICATOR
 
-
-// STEP 18
+// STEP 234234
 // COOL GRAPHICS
 
 
