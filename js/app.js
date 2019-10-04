@@ -89,6 +89,7 @@ class Part {
   $damageIndicator = $(`#damage-indicator`)
   $healthPoint = $(`#health-point`)
   $currentPlayer = $(`#current-player`)
+  $mainGame = $(`.main-game`)
 
   // PLAYER STATUS
   $playerSword = $(`#player-sword`)
@@ -98,6 +99,8 @@ class Part {
   $playerRightLeg = $(`#player-right-leg`)
   $playerRightArm = $(`#player-right-arm`)
   $playerGun = $(`#player-gun`)
+
+
 
 
 // STEP 2 
@@ -121,8 +124,8 @@ const playerLeftHand = new Part ("Left Hand", 3,3,true,0,0,0,$playerLeftArm);
 const playerRightHand = new Part ("Right Hand",3,3,true,0,0,0,$playerRightArm);
 const playerLeftLeg = new Part ("Left Leg",3,3,true,0,0,5,$playerLeftLeg);
 const playerRightLeg = new Part ("Right Leg",3,3,true,0,0,5,$playerRightLeg);
-const playerSword = new Part ("Sword",0,0,true,1,75,0);
-const playerGun = new Part ("Gun",0,0,true,2,60,0);
+const playerSword = new Part ("Sword",0,0,true,6,100,0); // damage 1, accuracy 75
+const playerGun = new Part ("Gun",0,0,true,6,100,0); // damage 2, accuracy 60
 const playerPartsArr = [
   playerBody,
   playerLeftHand,
@@ -137,8 +140,8 @@ const opponentLeftHand = new Part ("Left Hand",3,3,true,0,0,0,$opponentLeftArm);
 const opponentRightHand = new Part ("Right Hand",3,3,true,0,0,0,$opponentRightArm);
 const opponentLeftLeg = new Part ("Left Leg",3,3,true,0,0,5,$opponentLeftLeg);
 const opponentRightLeg = new Part ("Right Leg",3,3,true,0,0,5,$opponentRightLeg);
-const opponentSword = new Part ("Sword",0,0,true,1,75,0);
-const opponentGun = new Part ("Gun",0,0,true,2,60,0);
+const opponentSword = new Part ("Sword",0,0,true,6,100,0); // damage 1 , accuracy 75
+const opponentGun = new Part ("Gun",0,0,true,6,100,0);
 const opponentPartsArr = [
   opponentBody,
   opponentLeftHand,
@@ -420,15 +423,29 @@ game = {
         <li>Attack Successful!</li>
         <li>${this.currentPlayer.name}'s ${this.selectedWeapon.name} has destroyed ${this.currentTarget.name}'s ${this.targetPart.name}.</li>
         `)
-        if (this.targetPart.name==="opponentLeftHand"||this.targetPart.name==="playerLeftHand"){
-          this.currentTarget.sword.functioning = false
+        if (this.targetPart.name==="Left Hand"){
+          this.currentTarget.sword.functioning = false;
+          if (this.currentTarget.name==="Opponent"){
+            $(`#opponent-sword`).addClass(`hidden`);
+          }else if(this.currentTarget.name=="Player"){
+            $(`#player-sword`).addClass(`hidden`);
+          }
+          // this.currentTarget.sword.selector.addClass(`hidden`);
           console.log(`${this.currentTarget.name}'s sword is broken`);
           $attackLog.append(`
         <li>Weapon Disabled!</li>
         <li>${this.currentTarget.name}'s sword has been disabled.</li>
         `)
-        }else if (this.targetPart.name==="opponentRightHand"||this.targetPart.name==="playerRightHand"){
-          this.currentTarget.gun.functioning = false
+        }else if (this.targetPart.name==="Right Hand"){
+          this.currentTarget.gun.functioning = false;
+          if (this.currentTarget.name==="Opponent"){
+            $(`#opponent-gun`).addClass(`hidden`);
+          }else if(this.currentTarget.name=="Player"){
+            $(`#player-gun`).addClass(`hidden`);
+          }
+          // if(this.currentTarget.name==="Player"){
+          // this.currentTarget.gun.selector.addClass(`hidden`);
+          // }
           console.log(`${this.currentTarget.name}'s gun is broken`);
           $attackLog.append(`
         <li>Weapon Disabled!<li>
@@ -499,7 +516,6 @@ game = {
      player legs ${player.leftLeg.currentHP} ${player.rightLeg.currentHP}`)
     console.log(`opponent body hp ${opponent.body.currentHP} opponent arms ${opponent.leftHand.currentHP} ${opponent.rightHand.currentHP} 
     opponent legs ${opponent.leftLeg.currentHP} ${opponent.rightLeg.currentHP}`)
-
     this.ended = true;
     this.playerAttackPhase = false;
     this.opponentAttackPhase = false;
@@ -536,10 +552,22 @@ game = {
     $endTurn.toggleClass(`hidden`);
   },
   toggleSelectSword() {
-    $selectSword.toggleClass(`hidden`);
+    if (player.sword.functioning === false){
+      if ($selectSword.hasClass(`hidden`)===false){
+        $selectSword.addClass(`hidden`);
+      } 
+    }else {
+      $selectSword.toggleClass(`hidden`);
+    }
   },
   toggleSelectGun() {
-    $selectGun.toggleClass(`hidden`);
+    if (player.gun.functioning === false){
+      if ($selectGun.hasClass(`hidden`)===false){
+        $selectGun.addClass(`hidden`);
+      }
+    }else {
+      $selectGun.toggleClass(`hidden`);
+    }
   },
   startGameVisibility () {
     this.toggleStartGameButton();
@@ -692,6 +720,7 @@ game = {
 // REMOVE WEAPON OPTIONS AFTER DESTROYED
 // REMOVE WEAPON GRAPHIC AFTER DESTROYED
 
+// GAME OVER SCREEN
 
 // STEP 17234234
 // MISS INDICATOR
