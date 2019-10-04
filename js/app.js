@@ -20,7 +20,7 @@ class Robot {
 }
 
 class Part {
-  constructor(name, currentHP, maxHP, functioning, damageValue, accuracy, dodgeValue){
+  constructor(name, currentHP, maxHP, functioning, damageValue, accuracy, dodgeValue,selector){
     this.name = name; // str
     this.currentHP = currentHP; //obj
     this.maxHP = maxHP; //obj
@@ -28,6 +28,12 @@ class Part {
     this.damageValue = damageValue; //obj
     this.accuracy = accuracy; //obj
     this.dodgeValue = dodgeValue; //obj
+    this.selector = selector;
+  }
+  updateHitPoints(){
+    for(let i=0;i <this.currentHP; i++){
+      this.selector.append(`<div id="health-point"><i class="fas fa-minus"></i></div> `)
+    }
   }
 }
 
@@ -49,22 +55,36 @@ class Part {
 // Create Robot Parts
 
 // Player Parts
-const playerBody = new Part ("playerBody",6,6,true,0,0,0,0);
-const playerLeftHand = new Part ("playerLeftHand", 3,3,true,0,0,0);
-const playerRightHand = new Part ("playerRighthand",3,3,true,0,0,0);
-const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,5);
-const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,5);
+const playerBody = new Part ("playerBody",6,6,true,0,0,0,0,$playerBody);
+const playerLeftHand = new Part ("playerLeftHand", 3,3,true,0,0,0,$playerLeftArm);
+const playerRightHand = new Part ("playerRighthand",3,3,true,0,0,0,$playerRightArm);
+const playerLeftLeg = new Part ("playerLeftLeg",3,3,true,0,0,5,$playerLeftLeg);
+const playerRightLeg = new Part ("playerRightLeg",3,3,true,0,0,5,$playerRightLeg),;
 const playerSword = new Part ("playerSword",0,0,true,1,75,0);
 const playerGun = new Part ("playerGun",0,0,true,2,60,0);
+const playerPartsArr = [
+  playerBody,
+  playerLeftHand,
+  playerLeftLeg,
+  playerRightHand,
+  playerRightLeg
+]
 
 // Opponent Parts
-const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,0);
-const opponentLeftHand = new Part ("opponentLeftHand",3,3,true,0,0,0);
-const opponentRightHand = new Part ("opponentRightHand",3,3,true,0,0,0);
-const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,0,5);
-const opponentRightLeg = new Part ("opponentRightLeg",3,3,true,0,0,5);
+const opponentBody = new Part ("opponentBody",6,6,true,0,0,0,0,$opponentBody);
+const opponentLeftHand = new Part ("opponentLeftHand",3,3,true,0,0,0,$opponentLeftArm);
+const opponentRightHand = new Part ("opponentRightHand",3,3,true,0,0,0,$opponentRightArm);
+const opponentLeftLeg = new Part ("opponentLeftLeg",3,3,true,0,0,5,$opponentLeftLeg);
+const opponentRightLeg = new Part ("opponentRightLeg",3,3,true,0,0,5,$opponentRightLeg);
 const opponentSword = new Part ("opponentSword",0,0,true,1,75,0);
 const opponentGun = new Part ("opponentGun",0,0,true,2,60,0);
+const opponentPartsArr = [
+  opponentBody,
+  opponentLeftHand,
+  opponentLeftLeg,
+  opponentRightHand,
+  opponentRightLeg
+]
 
 
 // STEP 4
@@ -115,6 +135,8 @@ game = {
 
   gameStartSet() {
     this.startGameVisibility();
+    this.addHitPoints(opponentPartsArr);
+    this.addHitPoints(playerPartsArr);
     console.log(`game start`);
     this.start = true;
     this.playerTurn();
@@ -126,6 +148,11 @@ game = {
       this.randomNGHitConnect()
     }
   },
+  addHitPoints (arr){
+    for (let i=0; i<arr.length; i++){
+      arr[i].updateHitPoints()
+    }
+  },
   playerTurn(){
     this.playerAttackPhase = true;
     this.opponentAttackPhase = false;
@@ -134,6 +161,7 @@ game = {
     console.log(`player turn started `);
     console.log(`awaiting weapon select`)
     this.toggleWeaponSelection();
+    this.displayCurrentPlayer();
     // game.randomNGHitConnect() // NOTE testing only
   },
   pressWeaponSelect() {
@@ -153,6 +181,7 @@ game = {
     this.currentTarget = player;
     this.currentPlayer = opponent;
     console.log (`opponent turn started`);
+    this.displayCurrentPlayer();
     this.startNewTurn();
   },
   gameEndConditionsMet() {
@@ -371,6 +400,11 @@ game = {
       console.log(`opponent selected "right" area`);
     } 
   },
+  displayCurrentPlayer (){
+    $currentPlayer.html(`<p>Currently Playing:</p>
+    <p>${this.currentPlayer.name}</p>`)
+
+  },
   gameOver () {
     console.log(`gameover status`);
     console.log(`player body hp ${player.body.currentHP}
@@ -458,6 +492,10 @@ game = {
     this.toggleEndTurnButton() ;
     this.toggleAttackSummary ();
     // this.toggleWeaponSelection() ;
+  },
+  healthStatusAppender (arr) {
+    for (let i=0;i<arr.h)
+
   }
 
   
@@ -485,6 +523,8 @@ game = {
   $opponentBody = $(`#opponent-body`)
   $opponentLeftArm = $(`#opponent-left-arm`)
   $opponentSword = $(`#opponent-sword`)
+  $opponentLeftLeg = $(`#opponent-left-leg`)
+  $opponentRightLeg = $(`#opponent-right-leg`)
 
   // WEAPON SELECT
   $selectSword = $(`#select-sword`)
@@ -515,7 +555,7 @@ game = {
   $playerRightLeg = $(`#player-right-leg`)
   $playerRightArm = $(`#player-right-arm`)
   $playerGun = $(`#player-gun`)
-  
+
   
   // STEP 13
   // EVENT LISTENERS
