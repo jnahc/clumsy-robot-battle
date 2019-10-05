@@ -297,17 +297,18 @@ game = {
     if (this.targetPart !== undefined){
       this.targetPart.damageIndicator();
       // this.targetPart.selector.toggleClass(`damage-indicator`);
+      if (this.targetPart.functioning===false){
+        this.targetPart.selector.addClass(`hidden`);
+      }
     }
-    if (this.targetPart.functioning===false){
-      this.selector.addClass(`hidden`);
-    }
-    this.targetPart = undefined;
     console.log(`${this.currentPlayer.name} turn ended`)
     $attackLog.empty();
     this.playerTurnEndVisibility();
     this.turnSwitcher();
   },
   turnSwitcher(){
+    console.log(`removing targetPart`);
+    this.targetPart = undefined;
     if (this.gameEndConditionsMet()===true){
       this.gameOver();
     }else if (this.gameEndConditionsMet()===false){
@@ -408,7 +409,7 @@ game = {
   attackLeftArea(){
     let randomNum = this.gameRandomNum();
     if (randomNum < 66) {
-      this.targetPart = this.currentTarget.leftHand;
+      this.targetPart = this.currentTarget.left;
       console.log(`rolled: ${randomNum}`);
       this.applyDamageAndDisplay();
     } else {
@@ -457,7 +458,7 @@ game = {
         if (this.targetPart.name==="Left Hand"){
           this.currentTarget.sword.functioning = false;
           if (this.currentTarget.name==="Opponent"){
-            $(`#opponent-sword`).addClass(`hidden`);
+            $(`#opponent-gun`).addClass(`hidden`);
           }else if(this.currentTarget.name=="Player"){
             $(`#player-sword`).addClass(`hidden`);
           }
@@ -470,7 +471,7 @@ game = {
         }else if (this.targetPart.name==="Right Hand"){
           this.currentTarget.gun.functioning = false;
           if (this.currentTarget.name==="Opponent"){
-            $(`#opponent-gun`).addClass(`hidden`);
+            $(`#opponent-sword`).addClass(`hidden`);
           }else if(this.currentTarget.name=="Player"){
             $(`#player-gun`).addClass(`hidden`);
           }
@@ -479,9 +480,9 @@ game = {
           // }
           console.log(`${this.currentTarget.name}'s gun is broken`);
           $attackLog.append(`
-        <li>Weapon Disabled!<li>
-        <li>${this.currentTarget.name}'s gun has been disabled.</li>
-        `)
+            <li>Weapon Disabled!<li>
+            <li>${this.currentTarget.name}'s gun has been disabled.</li>
+          `)
         }
         this.damageSuccessShow();
         this.targetPart.removeSelf()
@@ -792,11 +793,14 @@ game = {
 // STEP 20
 // ACTUAL ROBOT
 
-// STEP 17234234
-// MISS INDICATOR
+// STEP 21
+// UPDATE PLAYER ICONS
 
-// STEP 234234
-// COOL GRAPHICS
+// STRETCH GOALS
+// FANCY MISS INDICATOR
+// GAME RESTART
+
+
 
 
 // game.$selectGun.
