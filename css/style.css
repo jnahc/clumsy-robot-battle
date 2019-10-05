@@ -348,6 +348,28 @@ body {
   flex-direction: row;
 }
 
+
+h2{
+  text-transform: uppercase;
+	font-size: 120px;
+	line-height: .75;
+	margin: 10px 0;
+}
+
+#game-over {
+  /* CREDIT https://freefrontend.com/css-text-animations/ */
+  background-image: url(../images/game-over-bg.gif);
+  background-size: cover;
+	text-align: center;
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	letter-spacing: 1px;
+}
+
 /* footer {
   background: gray;
   width: 100%;

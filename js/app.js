@@ -194,6 +194,7 @@ game = {
   selectedWeapon: undefined,
   selectedZone: undefined,
   targetPart: undefined,
+  showStopper: "",
 
   // GAME METHODS
 
@@ -252,15 +253,19 @@ game = {
   gameEndConditionsMet() {
     if(player.body.functioning === false) {
       console.log(`game over - player body destroyed`);
+      this.showStopper = "Player Body Destroyed"
       return true; 
     } else if (opponent.body.functioning === false){
       console.log(`game over - opponent body destroyed`);
+      this.showStopper = "Opponent Body Destroyed"
       return true; 
     } else if (player.leftHand.functioning === false && player.rightHand.functioning === false) {
       console.log(`game over - player disabled, no weapons`);
+      this.showStopper = "Player Disabled - No Weapons"
       return true; 
     } else if (opponent.rightHand.functioning === false && opponent.leftHand.functioning === false){  
-      console.log(`game over - opponent disabled, no weapons`);  
+      console.log(`game over - opponent disabled, no weapons`); 
+      this.showStopper = "Opponent Disabled - No Weapons" 
       return true;
     }else {
       return false;
@@ -516,6 +521,8 @@ game = {
      player legs ${player.leftLeg.currentHP} ${player.rightLeg.currentHP}`)
     console.log(`opponent body hp ${opponent.body.currentHP} opponent arms ${opponent.leftHand.currentHP} ${opponent.rightHand.currentHP} 
     opponent legs ${opponent.leftLeg.currentHP} ${opponent.rightLeg.currentHP}`)
+    $mainGame.empty();
+    $mainGame.append(`<div id="game-over"><h2>GAME OVER - ${this.showStopper}</h2><div>`)
     this.ended = true;
     this.playerAttackPhase = false;
     this.opponentAttackPhase = false;
@@ -720,6 +727,7 @@ game = {
 // REMOVE WEAPON OPTIONS AFTER DESTROYED
 // REMOVE WEAPON GRAPHIC AFTER DESTROYED
 
+// STEP 18
 // GAME OVER SCREEN
 
 // STEP 17234234
