@@ -56,7 +56,7 @@ class Part {
 
 //jQuery
   // START GAME
-  $startGame = $(`#temporary-start`)
+  $startGame = $(`#game-start`)
 
   // ENEMY ROBOT
   $opponent = $(`.opponent`)
@@ -729,6 +729,12 @@ game = {
 
 // STEP 18
 // GAME OVER SCREEN
+
+// STEP 19
+// START SCREEN
+
+// STEP 20
+// ACTUAL ROBOT
 
 // STEP 17234234
 // MISS INDICATOR

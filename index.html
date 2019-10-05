@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./node_modules/animate.css/animate.min.css">
   <script src="https://kit.fontawesome.com/dc4866cb54.js" crossorigin="anonymous"></script>
   <script defer
   src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -16,19 +17,29 @@
   <title>CLUMSY ROBOT BATTLE</title>
 </head>
 <body>
-  <!-- <div id="first-screen">
-    <h1>CLUMSY ROBOT BATTLE</h1>
-    <container id="intro-text"> 
-    </container>
-    <button id="start-game"></button>
-  </div> -->
   <header>
     <div class="title">
       <h1>CLUMSY ROBOT BATTLE</h1>
-      <button id="temporary-start">TEMPORARY START</button>
+      <!-- <button id="temporary-start">TEMPORARY START</button> -->
     </div>
   </header>
-  <container class="main-game">
+  <div id="first-screen">
+    <container id="intro-text">
+      <h2>Welcome to Clumsy Robot Battle</h2>
+      <h3>Game Basics</h3>
+      <p>You will be battling 1v1 with a robot. This is what will happen, you will select a weapon, then you will select the area you want to target. Then you will attempt to attack.</p>
+      <p>After your turn is over, the robot will attempt to attack you - this will repeat until the game ends. When a player's body is destroyed or both arms are destroyed, the game will end</p> 
+      <h3>Robot Parts</h3>
+      <p>Each arm is holding a weapon, once an arm is broken, the weapon will no longer be available to use. Each leg will provide a 7.5% dodge bonus</p>
+      <h3>Weapons</h3>
+      <p>The gun does more damage, but has a higher chance to miss. The sword does half the damage that the gun does, but it's more accurate.</p>
+
+      <section>
+        <button id="start-game">Start Game</button>
+      </section> 
+    </container>
+  </div>
+  <container class="main-game hidden">
     <section id="missed" class="display-none">MISSED</section>
     <section class="attack-area">
       <div class="attack-top-row">
