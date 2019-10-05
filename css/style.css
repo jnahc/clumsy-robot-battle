@@ -30,6 +30,7 @@ header {
 body {
   max-width: 980px;
   min-height: 700px;
+  max-height: 800px;
   margin: 0 auto;
 }
 

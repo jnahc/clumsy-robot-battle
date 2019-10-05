@@ -644,7 +644,11 @@ game = {
   // START GAME
   $startGame.on(`click`, function(event){
     console.log(`$startGame clicked`);
-    game.gameStartSet()
+    $(`#first-screen`).addClass(`animated flipOutX`);
+    setTimeout(function(){ $(`#first-screen`).remove(); }, 400);
+    
+    $mainGame.toggleClass(`hidden animated flipInY`);
+    game.gameStartSet();
   });
 
   // WEAPON SELECTION
