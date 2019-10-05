@@ -19,9 +19,9 @@ class Robot {
   }
   disarmSelf(){
     if (this.leftHand.functioning===false){
-      this.sword.selector.addClass(`hidden`);
+      this.gun.selector.addClass(`hidden`);
     } else if (this.rightHand.functioning===false){
-      this.gun.selector.addClass(`hidden`)
+      this.sword.selector.addClass(`hidden`)
     }
   }
  
@@ -47,17 +47,21 @@ class Part {
   removeSelf(){
     if (this.functioning===false){
       this.selector.toggleClass(`animated hinge`);
-      setTimeout(function(){
-        this.selector.addClass(`hidden`);
-       },250)
+      // setTimeout(function(){
+        // this.selector.addClass(`hidden`);
+      //  },250)
     }
   }
   damageIndicator(){
+    // if(this.functioning===true){
+    console.log(`applying effects`)
     this.selector.toggleClass(`damage-indicator`);
-    // this.selector.removeClass(`animated swing`);
-    // setTimeout(function(){
-    //   this.selector.toggleClass(`animated swing`);
-    // },10)
+    this.selector.toggleClass(`animated swing`);
+      // setTimeout(function(){
+      //   this.selector.toggleClass(`animated swing`);
+      // },10)
+    // }
+   
 
 
   }
@@ -292,6 +296,10 @@ game = {
   endTurn() {
     if (this.targetPart !== undefined){
       this.targetPart.damageIndicator();
+      // this.targetPart.selector.toggleClass(`damage-indicator`);
+    }
+    if (this.targetPart.functioning===false){
+      this.selector.addClass(`hidden`);
     }
     this.targetPart = undefined;
     console.log(`${this.currentPlayer.name} turn ended`)
