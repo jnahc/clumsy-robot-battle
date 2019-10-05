@@ -281,19 +281,25 @@ body {
 #attack-summary {
   width: 175px;
   height: 175px;
-  shape-outside: inset(20px 50px 10px 0 round 50px);
+  shape-outside: inset(10px 25px 10px 0 round 50px);
   background-color: steelblue;
   border: 2px solid black;
   border-radius: 10px;
-  margin: 20px;
-  padding: 20px;
+  margin: 15px;
+  padding: 10px;
+}
 
+#log {
+  height: 125px;
+  overflow-y: scroll;
 }
 
 #progress {
   display: flex;
   flex-direction: column;
 }
+
+
 
 #progress div {
   width: 150px;
@@ -304,7 +310,6 @@ body {
   border-radius: 10px;
   margin: 20px;
   padding: 20px;
-
 }
 
 /* GAME ICONS SECTION */

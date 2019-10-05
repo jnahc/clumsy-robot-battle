@@ -46,11 +46,20 @@ class Part {
   }
   removeSelf(){
     if (this.functioning===false){
-      this.selector.addClass(`hidden`);
+      this.selector.toggleClass(`animated hinge`);
+      setTimeout(function(){
+        this.selector.addClass(`hidden`);
+       },250)
     }
   }
   damageIndicator(){
-    this.selector.toggleClass(`damage-indicator`)
+    this.selector.toggleClass(`damage-indicator`);
+    // this.selector.removeClass(`animated swing`);
+    // setTimeout(function(){
+    //   this.selector.toggleClass(`animated swing`);
+    // },10)
+
+
   }
 }
 
@@ -91,7 +100,7 @@ class Part {
   $currentPlayer = $(`#current-player`)
   $mainGame = $(`.main-game`)
 
-  // PLAYER STATUS
+  // PLAYER HP BARS
   $playerSword = $(`#player-sword`)
   $playerLeftArm = $(`#player-left-arm`)
   $playerLeftLeg = $(`#player-left-leg`)
@@ -99,6 +108,15 @@ class Part {
   $playerRightLeg = $(`#player-right-leg`)
   $playerRightArm = $(`#player-right-arm`)
   $playerGun = $(`#player-gun`)
+
+  // PLAYER PARTS DIVS
+  $playerSwordDiv = $(`#player-sword-div`)
+  $playerLeftArmDiv = $(`#player-left-arm-div`)
+  $playerLeftLegDiv = $(`#player-left-leg-div`)
+  $playerBodyDiv = $(`#player-body-div`)
+  $playerRightLegDiv = $(`#player-right-leg-div`)
+  $playerRightArmDiv = $(`#player-right-arm-div`)
+  $playerGunDiv = $(`#player-gun-div`)
 
 
 
@@ -124,8 +142,8 @@ const playerLeftHand = new Part ("Left Hand", 3,3,true,0,0,0,$playerLeftArm);
 const playerRightHand = new Part ("Right Hand",3,3,true,0,0,0,$playerRightArm);
 const playerLeftLeg = new Part ("Left Leg",3,3,true,0,0,5,$playerLeftLeg);
 const playerRightLeg = new Part ("Right Leg",3,3,true,0,0,5,$playerRightLeg);
-const playerSword = new Part ("Sword",0,0,true,6,100,0); // damage 1, accuracy 75
-const playerGun = new Part ("Gun",0,0,true,6,100,0); // damage 2, accuracy 60
+const playerSword = new Part ("Sword",0,0,true,1,200,0); // damage 1, accuracy 75
+const playerGun = new Part ("Gun",0,0,true,2,200,0); // damage 2, accuracy 60
 const playerPartsArr = [
   playerBody,
   playerLeftHand,
@@ -140,8 +158,8 @@ const opponentLeftHand = new Part ("Left Hand",3,3,true,0,0,0,$opponentLeftArm);
 const opponentRightHand = new Part ("Right Hand",3,3,true,0,0,0,$opponentRightArm);
 const opponentLeftLeg = new Part ("Left Leg",3,3,true,0,0,5,$opponentLeftLeg);
 const opponentRightLeg = new Part ("Right Leg",3,3,true,0,0,5,$opponentRightLeg);
-const opponentSword = new Part ("Sword",0,0,true,6,100,0); // damage 1 , accuracy 75
-const opponentGun = new Part ("Gun",0,0,true,6,100,0);
+const opponentSword = new Part ("Sword",0,0,true,1,100,0); // damage 1 , accuracy 75
+const opponentGun = new Part ("Gun",0,0,true,2,100,0);
 const opponentPartsArr = [
   opponentBody,
   opponentLeftHand,
@@ -655,40 +673,66 @@ game = {
   $selectSword.on(`click`, function(event){
     console.log(`$selectSword clicked`);
     game.selectedWeapon = player.sword;
+    $selectSword.toggleClass(`animated heartBeat`);
+    setTimeout(function(){
     game.toggleWeaponSelection();
-    game.pressWeaponSelect();
+    game.pressWeaponSelect(); 
+    $selectSword.toggleClass(`animated heartBeat`);
+    }, 500);
+    
   });
 
   $selectGun.on(`click`, function(event){
     console.log(`$selectGun clicked`);
     game.selectedWeapon = player.gun;
-    game.toggleWeaponSelection();
-    game.pressWeaponSelect();
+    $selectGun.toggleClass(`animated heartBeat`);
+    setTimeout(function(){
+      game.toggleWeaponSelection();
+      game.pressWeaponSelect();
+      $selectGun.toggleClass(`animated heartBeat`);
+      }, 500);
+    
   });
 
   // TARGET AREA SELECT
   $attackLeft.on(`click`, function(event){
     console.log(`$attackLeft clicked`);
+    $attackLeft.toggleClass(`animated flash`);
+    setTimeout(function(){
+      game.pressTargetSelect() ;
+      $attackLeft.toggleClass(`animated flash`);
+    }, 500)
     game.selectedZone = "left" ;
-    game.pressTargetSelect() ;
   });
 
   $attackBody.on(`click`, function(event){
     console.log(`$attackBody clicked`);
+    $attackBody.toggleClass(`animated flash`);
+    setTimeout(function(){
+      game.pressTargetSelect() ;
+      $attackBody.toggleClass(`animated flash`);
+    }, 500)
     game.selectedZone = "up" ;
-    game.pressTargetSelect() ;
   });
 
   $attackRight.on(`click`, function(event){
     console.log(`$attackRight clicked`);
+    $attackRight.toggleClass(`animated flash`);
+    setTimeout(function(){
+      game.pressTargetSelect() ;
+      $attackRight.toggleClass(`animated flash`);
+    }, 500)
     game.selectedZone = "right" ;
-    game.pressTargetSelect() ;
   });
 
   $attackLegs.on(`click`, function(event){
     console.log(`$attackLegs clicked`);
+    $attackLegs.toggleClass(`animated flash`);
+    setTimeout(function(){
+      game.pressTargetSelect() ;
+      $attackLegs.toggleClass(`animated flash`);
+    }, 500)
     game.selectedZone = "down" ;
-    game.pressTargetSelect() ;
   });
 
   // POST BATTLE
