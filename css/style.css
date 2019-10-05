@@ -125,16 +125,21 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 175px;
-  height: 200px;
+  
   /* shape-outside: inset(20px 50px 10px 0 round 50px);
   background-color: rebeccapurple;
   border: 2px solid black;
   border-radius: 10px; */
-  background-image: url(../images/robot/body.png);
-  background-size: cover;
+  /* background-image: url(../images/robot/body.png);
+  background-size: cover; */
   margin: 5px;
   padding: 5px;
+}
+
+#opponent-body img {
+  object-fit: cover;
+  width: 175px;
+  height: 200px;
 }
 
 #opponent-left-arm {
@@ -142,62 +147,80 @@ body {
   flex-direction: row;
   width: 200px;
   height: 200px;
+  background-image: url(../images/robot/arm.png);
+  background-size: cover;
+  border-radius: 10px; 
+  margin: 5px;
+  padding: 5px;
   /* shape-outside: inset(20px 50px 10px 0 round 50px);
   background-color: rebeccapurple;
   border: 2px solid black;
-  border-radius: 10px; */
-  background-image: url(../images/robot/arm.png);
-  background-size: cover;
-  margin: 5px;
-  padding: 5px;
+  */
 }
+/* #opponent-left-arm img {
+  object-fit: cover;
+  transform: scaleX(-1)
+ */
 
 #opponent-right-arm {
   display: flex;
   flex-direction: row;
   width: 200px;
   height: 200px;
-  /* shape-outside: inset(20px 50px 10px 0 round 50px);
-  background-color: rebeccapurple;
-  border: 2px solid black; */
   background-image: url(../images/robot/arm.png);
   background-size: cover;
   border-radius: 10px;
   margin: 5px;
   padding: 5px;
-  transform: rotate(90deg);
+  /* shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black; */
 }
+
+/* #opponent-right-arm img {
+  object-fit: cover;
+  transform: rotate(90deg);
+} */
 
 #opponent-left-leg {
   display: flex;
   flex-direction: row;
+  background-image: url(../images/robot/leg.png);
+  background-size: cover;
   width: 100px;
   height: 150px;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
   /* shape-outside: inset(20px 50px 10px 0 round 50px);
   background-color: rebeccapurple;
   border: 2px solid black;
-  border-radius: 10px; */
-  background-image: url(../images/robot/leg.png);
-  background-size: cover;
-  margin: 20px;
-  padding: 20px;
+   */
 }
+
+/* #opponent-left-leg img {
+  object-fit: cover;
+} */
 
 #opponent-right-leg {
   display: flex;
   flex-direction: row;
   width: 100px;
   height: 150px;
-  /* shape-outside: inset(20px 50px 10px 0 round 50px);
-  background-color: rebeccapurple;
-  border: 2px solid black;
-  border-radius: 10px; */
   background-image: url(../images/robot/leg.png);
   background-size: cover;
   margin: 20px;
   padding: 20px;
-  transform: scaleX(-1);
+  /* shape-outside: inset(20px 50px 10px 0 round 50px);
+  background-color: rebeccapurple;
+  border: 2px solid black;
+  border-radius: 10px; */
 }
+
+/* #opponent-right-leg img {
+  object-fit: cover;
+  transform: scaleX(-1);
+} */
 
 #opponent-gun {
   /* font-size: 7em; */
@@ -209,7 +232,13 @@ body {
   padding: 20px;
 }
 
-#opponent-sword{
+/* #opponent-gun img {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+} */
+
+#opponent-sword {
   /* font-size: 7em; */
   background-image: url(../images/robot/sword2.png);
   background-size: cover;
@@ -218,6 +247,10 @@ body {
   margin: 20px;
   padding: 20px;
 }
+
+/* #opponent-sword img {
+  object-fit: cover;
+} */
 
 
 /* AREA SELECT SECTION */
