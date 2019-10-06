@@ -4,6 +4,14 @@
 // STEP 1 
 // Create class for ROBOTS
 // Create class for PARTS
+const gameStartMusic = new Audio (`./music/game-start.mp3`);
+gameStartMusic.loop = true;
+const gameBattleMusic = new Audio (`./music/game-battle.mp3`);
+gameBattleMusic.loop = true;
+const gameOverMusic = new Audio (`./music/game-over.mp3`)
+gameOverMusic.loop = true;
+
+
 
 class Robot {
   constructor(name, body, leftHand, rightHand, leftLeg, rightLeg, sword, gun){
@@ -228,6 +236,9 @@ game = {
     console.log(`game start`);
     this.start = true;
     this.playerTurn();
+    gameStartMusic.pause();
+    gameBattleMusic.play();
+
   },
   startNewTurn() {
     if (this.currentPlayer === opponent){
@@ -568,6 +579,8 @@ game = {
     opponent legs ${opponent.leftLeg.currentHP} ${opponent.rightLeg.currentHP}`)
     $mainGame.empty();
     $mainGame.append(`<div id="game-over"><h2>GAME OVER - ${this.showStopper}</h2><div>`)
+    gameBattleMusic.pause();
+    gameOverMusic.play();
     this.ended = true;
     this.playerAttackPhase = false;
     this.opponentAttackPhase = false;
@@ -687,6 +700,10 @@ game = {
   // STEP 13
   // EVENT LISTENERS
   // START GAME
+  $(`#intro-text h2`).on(`click`, function (event){
+    gameStartMusic.play();
+  })
+
   $startGame.on(`click`, function(event){
     console.log(`$startGame clicked`);
     $(`#first-screen`).addClass(`animated flipOutX`);
@@ -774,6 +791,7 @@ game = {
     console.log(`$endTurn clicked`);
     game.endTurn()
   })
+  
   
   
 // STEP 13

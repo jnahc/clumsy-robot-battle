@@ -68,6 +68,10 @@ Shake screen effect for attack success.
 
 The "MISSED ATTACK" improved.
 
+### Day 6 - Sunday
+
+Added background music.
+
 ## Unsolved Problems
 
 At the start screen, the main div for the game appears below as an empty div.
@@ -98,6 +102,8 @@ Like run on sentences, avoiding large function that did multiple things was help
 Similar to above, having a div that only does one thing is helpful too. For example - a div for the title, a div for the image, a div for paragraph etc.
 
 Same in CSS, for example I had right-hand as a class,  I shouldve just made it right and hand
+
+I just found out autoplay music is disabled - https://developers.google.com/web/updates/2017/09/autoplay-policy-changes - for my game start music, you have to click the h2 to start.
 
 ## Credits
 
