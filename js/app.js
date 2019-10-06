@@ -103,6 +103,7 @@ class Part {
   $healthPoint = $(`#health-point`)
   $currentPlayer = $(`#current-player`)
   $mainGame = $(`.main-game`)
+  $missed = $(`#missed`)
 
   // PLAYER HP BARS
   $playerSword = $(`#player-sword`)
@@ -349,6 +350,14 @@ game = {
   attackMissed (){
     console.log(`Attack missed!`);
     $attackLog.append(`<li>${this.currentPlayer.name} attack missed! </li>`);
+    $missed.append(`ATTACK MISSED!`);
+    $missed.toggleClass(`animated wobble`)
+    setTimeout(function(){
+      $missed.toggleClass(`animated wobble`)
+      $missed.empty(); 
+     }, 1500);
+   
+  
     this.awaitNextButton();
   
   },
@@ -409,7 +418,7 @@ game = {
   attackLeftArea(){
     let randomNum = this.gameRandomNum();
     if (randomNum < 66) {
-      this.targetPart = this.currentTarget.left;
+      this.targetPart = this.currentTarget.leftHand;
       console.log(`rolled: ${randomNum}`);
       this.applyDamageAndDisplay();
     } else {
@@ -672,7 +681,9 @@ game = {
   $startGame.on(`click`, function(event){
     console.log(`$startGame clicked`);
     $(`#first-screen`).addClass(`animated flipOutX`);
-    setTimeout(function(){ $(`#first-screen`).remove(); }, 400);
+    setTimeout(function(){
+       $(`#first-screen`).remove(); 
+      }, 400);
     
     $mainGame.toggleClass(`hidden animated flipInY`);
     game.gameStartSet();
