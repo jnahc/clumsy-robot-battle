@@ -41,7 +41,7 @@
   </div>
   <container class="main-game hidden">
       <section id="missed"></section>
-    <section class="attack-area">
+    <section class="attack-area animated pulse infinite">
       <div class="attack-top-row">
         <div id="attack-left"><i class="fas fa-crosshairs"></i></div>
         <div id="attack-body"><i class="fas fa-crosshairs"></i></div>
@@ -51,7 +51,7 @@
         <div id="attack-leg"><i class="fas fa-crosshairs"></i></div>
       </div>
     </section>
-    <section class="opponent animated pulse infinite">
+    <section class="opponent animated bounce infinite">
       <section id="opponent-weapons">
           <div id="opponent-gun">
             <!-- <img src="./images/robot/gun2.png" alt=""> -->
@@ -89,15 +89,15 @@
           </div>
         </div>
         <div id="progress">
-          <div id="next">NEXT</div>
-          <div id="end-turn">END TURN</div>
+          <div id="next" class="animated pulse infinite">NEXT</div>
+          <div id="end-turn" class="animated pulse infinite">END TURN</div>
 
         </div>
       </section>
     <section class="selection">
-        <div id="select-sword">SELECT SWORD</div>
+        <div id="select-sword" class="animated pulse infinite">SELECT SWORD</div>
         <div id="current-player"></div>
-        <div id="select-gun">SELECT GUN</div>
+        <div id="select-gun" class="animated pulse infinite">SELECT GUN</div>
       </section>
     <section class="misc">
       <!-- <div id="damage-indicator"><i class="fas fa-haykal"></i></div>

@@ -431,11 +431,18 @@ body {
   width: 150px;
   height: 100px;
   shape-outside: inset(20px 50px 10px 0 round 50px);
-  background-color: gold;
   border: 2px solid black;
   border-radius: 10px;
   margin: 20px;
   padding: 20px;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
 }
 
 #missed {

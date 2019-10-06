@@ -247,6 +247,8 @@ game = {
     this.opponentAttackPhase = false;
     this.currentTarget = opponent;
     this.currentPlayer = player;
+    $currentPlayer.removeClass(`red`);
+    $currentPlayer.addClass(`green`);
     console.log(`player turn started `);
     console.log(`awaiting weapon select`)
     this.toggleWeaponSelection();
@@ -269,6 +271,8 @@ game = {
     this.opponentAttackPhase = true;
     this.currentTarget = player;
     this.currentPlayer = opponent;
+    $currentPlayer.removeClass(`green`);
+    $currentPlayer.addClass(`red`);
     console.log (`opponent turn started`);
     this.displayCurrentPlayer();
     this.startNewTurn();
