@@ -455,6 +455,11 @@ game = {
       this.attackMissed() 
     } else {
       console.log(`apply damage - attack success`);
+      $(`body`).toggleClass(`animated shake`);
+      setTimeout(function(){
+        $(`body`).toggleClass(`animated shake`);
+        }, 500);
+
       let damagedPartHP = this.targetPart.currentHP - this.selectedWeapon.damageValue
       if (damagedPartHP <= 0) {
         this.targetPart.currentHP = 0;
