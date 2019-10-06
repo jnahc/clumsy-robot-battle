@@ -125,3 +125,17 @@ https://giphy.com/gifs/oc-effects-retrowaveoutrun-h9PwsDN4EffLq
 ## Favicon
 https://www.favicon.cc/?action=icon&file_id=908238
 
+## Background Music 
+
+Start Music
+Music from https://filmmusic.io
+"Phantom from Space" by Kevin MacLeod (https://incompetech.com)
+License: CC BY (http://creativecommons.org/licenses/by/4.0/)
+
+Battle Music
+https://www.bensound.com/
+
+Game Over Music
+Music from https://filmmusic.io
+"Victory" by Alexander Nakarada (https://www.serpentsoundstudios.com/)
+License: CC BY (http://creativecommons.org/licenses/by/4.0/)
