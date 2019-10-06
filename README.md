@@ -2,15 +2,15 @@ A README.md file with an explanation of what the project is and why you made it,
 
 # CLUMSY ROBOT BATTLE
 ### Table of Contents
-*Origin Story #1
-*User Stories & Wireframes #2
-*Technologies Used
-*Approach Taken
-*Technologies Used
-*Approach Taken
-*Unsolved Problems
-*Final Remarks
-*Credits
+* Origin Story #1 (https://git.generalassemb.ly/jeff-chan-sf-sei-05/clumsy-robot-battle/blob/master/README.md#origin-story)
+* User Stories & Wireframes #2
+* Technologies Used
+* Approach Taken
+* Technologies Used
+* Approach Taken
+* Unsolved Problems
+* Final Remarks
+* Credits
 
 #1
 ## Origin Story 
