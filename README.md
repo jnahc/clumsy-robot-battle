@@ -1,6 +1,10 @@
 # CLUMSY ROBOT BATTLE
+
+## Deployed via Github Pages
+https://jnahc.github.io/clumsy-robot-battle/
+
 ### Table of Contents
-* [Origin Story #1](https://git.generalassemb.ly/jeff-chan-sf-sei-05/clumsy-robot-battle/blob/master/README.md#origin-story)
+* [Origin Story](https://git.generalassemb.ly/jeff-chan-sf-sei-05/clumsy-robot-battle/blob/master/README.md#origin-story)
 * [User Stories & Wireframes](https://git.generalassemb.ly/jeff-chan-sf-sei-05/clumsy-robot-battle/blob/master/README.md#user-stories--wireframes)
 * [Technologies Used](https://git.generalassemb.ly/jeff-chan-sf-sei-05/clumsy-robot-battle/blob/master/README.md#technologies-used)
 * [Approach Taken](https://git.generalassemb.ly/jeff-chan-sf-sei-05/clumsy-robot-battle/blob/master/README.md#approach-taken)
